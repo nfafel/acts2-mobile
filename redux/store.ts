@@ -15,7 +15,7 @@ function rootReducer(state = initialState, action: any) {
             return Object.assign({}, state, action.payload);
 
         case LOGOUT_USER:
-            return Object.assign({}, state, {token: "", subscribed: null});
+            return Object.assign({}, state, {token: ""});
 
         default: 
             return state

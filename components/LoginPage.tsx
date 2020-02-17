@@ -16,7 +16,7 @@ const LoginPage: React.FC= () => {
                     </TouchableOpacity>
                 </View>)
                 :
-                (<CreateAccount />)
+                (<CreateAccount cancel={() => setCreateAccountOpen(false)} />)
             }
         </View>
     );

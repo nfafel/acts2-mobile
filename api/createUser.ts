@@ -1,6 +1,7 @@
 import { ILoginInfo } from '../interfaces/ILoginInfo';
+import { IUser } from '../interfaces/IUser';
 
-const createUser = async(values: ILoginInfo) => {
+const createUser = async(newUser: IUser) => {
     const URL: string = process.env.URL || "http://localhost:5000";
     try {
         const userResponse = await fetch(`${URL}/user`, {
@@ -10,12 +11,12 @@ const createUser = async(values: ILoginInfo) => {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
-                username: values.username,
-                password: values.password
+                username: newUser.username,
+                password: newUser.password,
+                universityId: newUser.universityId
             })
         })
         const body = await userResponse.json();
-        console.log(body);
         return body.token;
     } catch(err) {
         console.log(err);
