@@ -87,7 +87,7 @@ class CreateAccount extends Component<CreateAccountProps> {
                                 }
                             </KeyboardAvoidingView>
 
-                            <UniversitySelector setFieldValue={setFieldValue} values={values} errors={errors} />
+                            <UniversitySelector setFieldValue={setFieldValue} values={values} errors={errors} touched={touched} />
                             
                             <View style={{marginHorizontal: 20, marginVertical: 10 }}>
                                 <TouchableOpacity style={{flexDirection:"row", justifyContent: "center", backgroundColor: '#2595f7', borderRadius: 3, height: 40 }} onPress={() => submitForm()} >

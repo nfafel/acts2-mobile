@@ -8,6 +8,6 @@ export default Yup.object().shape({
     confirmationPassword: Yup.string()
         .required('Required')
         .oneOf([Yup.ref('password'), null], "Passwords Don't Match"),
-    // universityName: Yup.string()
-    //     .required('Required'),
+    universityId: Yup.mixed()
+        .required('Required'),
 })

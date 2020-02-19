@@ -8,7 +8,8 @@ import UniversitySelectorModal from './UniversitySelectorModal';
 type UniversitySelectorProps = {
     setFieldValue: Function,
     values: any,
-    errors: any
+    errors: any,
+    touched: any
 }
 
 type UniversitySelectorState = {
@@ -52,7 +53,7 @@ class UniversitySelector extends Component<UniversitySelectorProps, UniversitySe
                     closeModal={()=> this.setState({selectorModalOpen: false})} 
                     setSelectedUniversity={(university: IUniversity) => this.setSelectedUniversity(university)} 
                 />
-                {this.props.errors.universityId && 
+                {(this.props.errors.universityId && this.props.touched.universityId) &&
                     <Text style={{color: 'red'}}>{this.props.errors.universityId}</Text>
                 }
             </KeyboardAvoidingView>
