@@ -1,15 +1,14 @@
 import React from 'react';
-import { View, Text } from 'react-native';
+import { View } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
-import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';  
 import FontAwesome5Icon from 'react-native-vector-icons/FontAwesome5';  
 
 import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIcons';  
 
-import Closet from './Closet';
-import Market from './Market';
-import Transactions from './Transactions';
+import Closet from './closet';
+import Market from './market/Market';
+import Transactions from './transactions/TransactionsRouter';
 
 const Tab = createMaterialBottomTabNavigator();
 
@@ -19,7 +18,6 @@ const AuthenticatedRouter: React.FC = () => {
             <Tab.Navigator
                 initialRouteName="Closet"
                 activeColor="black"
-                labelStyle={{ fontSize: 12 }}
                 barStyle={{height: "8%", backgroundColor: "#c4c4c4"}}
                 labeled={false}
             >
@@ -30,10 +28,10 @@ const AuthenticatedRouter: React.FC = () => {
                         tabBarIcon: ({ focused, color}) => (
                             <View style={{height: 40, width: 40}}>
                                 <MaterialCommunityIcon 
-                                name={focused ? "tshirt-crew" : "tshirt-crew-outline"}
-                                color={color} 
-                                size={40} 
-                            />
+                                    name={focused ? "tshirt-crew" : "tshirt-crew-outline"}
+                                    color={color} 
+                                    size={40} 
+                                />
                             </View>
                         ),
                     }}

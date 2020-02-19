@@ -2,16 +2,16 @@ import React from 'react';
 import {Component} from 'react';
 import { View, Text, TextInput, KeyboardAvoidingView, TouchableOpacity } from 'react-native';
 
-type ClosetProps = {
+type IncomingProps = {
     
 }
 
-type ClosetState = {
+type IncomingState = {
     
 }
 
-class Closet extends Component<ClosetProps, ClosetState> {
-    constructor(props: ClosetProps) {
+class Incoming extends Component<IncomingProps, IncomingState> {
+    constructor(props: IncomingProps) {
         super(props);
         this.state = {
             
@@ -21,10 +21,10 @@ class Closet extends Component<ClosetProps, ClosetState> {
     render() {
         return (
             <View>
-                <Text>Closet</Text>
+                <Text>Incoming</Text>
             </View>
         )
     }
 }
 
-export default Closet;
+export default Incoming;

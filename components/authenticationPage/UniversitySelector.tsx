@@ -1,9 +1,8 @@
 import React from 'react';
 import {Component} from 'react';
-import { View, Text, TextInput, KeyboardAvoidingView, TouchableOpacity } from 'react-native';
-import { IUniversity } from '../interfaces/IUniversity';
-import getUniversities from '../api/getUniversities';
-import UniversitySelectorModal from './UniversitySelectorModal';
+import { View, Text, KeyboardAvoidingView, TouchableOpacity } from 'react-native';
+import { IUniversity } from '../../interfaces/IUniversity';
+import UniversitySelectorModal from '../universitySelector/UniversitySelectorModal';
 
 type UniversitySelectorProps = {
     setFieldValue: Function,

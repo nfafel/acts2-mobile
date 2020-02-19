@@ -4,7 +4,7 @@ import {
 } from 'react-native';
 
 import { connect } from "react-redux";
-import LoginPage from './LoginPage';
+import AuthenticationPage from './authenticationPage/AuthenticationPage';
 import AuthenticatedRouter from './AuthenticatedRouter';
 
 type MainProps = {
@@ -15,7 +15,7 @@ const Main: React.FC<MainProps> = (props) => {
     return (
         <SafeAreaView style={{height: "100%"}}>
             {(props.token === '') ? 
-                <LoginPage/> 
+                <AuthenticationPage/> 
                 :
                 <AuthenticatedRouter /> 
             }

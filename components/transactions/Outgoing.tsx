@@ -2,16 +2,16 @@ import React from 'react';
 import {Component} from 'react';
 import { View, Text, TextInput, KeyboardAvoidingView, TouchableOpacity } from 'react-native';
 
-type TransactionsProps = {
+type OutgoingProps = {
     
 }
 
-type TransactionsState = {
+type OutgoingState = {
     
 }
 
-class Transactions extends Component<TransactionsProps, TransactionsState> {
-    constructor(props: TransactionsProps) {
+class Outgoing extends Component<OutgoingProps, OutgoingState> {
+    constructor(props: OutgoingProps) {
         super(props);
         this.state = {
             
@@ -21,10 +21,10 @@ class Transactions extends Component<TransactionsProps, TransactionsState> {
     render() {
         return (
             <View>
-                <Text>Transactions</Text>
+                <Text>Outgoing</Text>
             </View>
         )
     }
 }
 
-export default Transactions;
+export default Outgoing;

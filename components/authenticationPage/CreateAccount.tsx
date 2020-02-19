@@ -3,13 +3,13 @@ import {Component} from 'react';
 import { View, TouchableOpacity, Text, TextInput, KeyboardAvoidingView, Alert } from 'react-native';
 import { Formik } from 'formik';
 
-import { storeJWT } from '../redux/actions';
+import { storeJWT } from '../../redux/actions';
 import { connect } from 'react-redux';
-import createAccountValidationSchema from '../validationSchemas/createAccountValidationSchema';
-import checkUsernameAvailability from '../api/checkUsernameAvailability';
-import createUser from '../api/createUser';
+import createAccountValidationSchema from '../../validationSchemas/createAccountValidationSchema';
+import checkUsernameAvailability from '../../api/checkUsernameAvailability';
+import createUser from '../../api/createUser';
 import UniversitySelector from './UniversitySelector';
-import { IUser } from '../interfaces/IUser';
+import { IUser } from '../../interfaces/IUser';
 
 const jwtDecode = require('jwt-decode');
 

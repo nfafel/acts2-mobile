@@ -3,12 +3,11 @@ import {Component} from 'react';
 import { View, TouchableOpacity, Text, TextInput, KeyboardAvoidingView, Alert } from 'react-native';
 import { Formik } from 'formik';
 
-import { storeJWT } from '../redux/actions';
+import { storeJWT } from '../../redux/actions';
 import { connect } from 'react-redux';
-import loginValidationSchema from '../validationSchemas/loginValidationSchema';
-import loginUser from '../api/loginUser';
-import { ILoginInfo } from '../interfaces/ILoginInfo';
-const jwtDecode = require('jwt-decode');
+import loginValidationSchema from '../../validationSchemas/loginValidationSchema';
+import loginUser from '../../api/loginUser';
+import { ILoginInfo } from '../../interfaces/ILoginInfo';
 
 type LoginProps = {
     loginUser: Function
@@ -90,7 +89,6 @@ class Login extends Component<LoginProps> {
 const mapDispatchToProps = function(dispatch: any) {
     return {
         loginUser: (token: string) => {
-            const decoded = jwtDecode(token);
             dispatch( storeJWT({
                 token: token, 
             }))

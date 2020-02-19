@@ -1,4 +1,3 @@
-import { ILoginInfo } from '../interfaces/ILoginInfo';
 import { IUser } from '../interfaces/IUser';
 
 const createUser = async(newUser: IUser) => {

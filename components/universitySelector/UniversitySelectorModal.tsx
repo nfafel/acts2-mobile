@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import { Modal, View, Text, ScrollView, TouchableOpacity, SafeAreaView, TextInput } from 'react-native';
-import { IUniversity } from '../interfaces/IUniversity';
-import getUniversities from '../api/getUniversities';
+import { IUniversity } from '../../interfaces/IUniversity';
+import getUniversities from '../../api/getUniversities';
 
 type UniversitySelectorProps = {
     visible: boolean,

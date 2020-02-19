@@ -13,7 +13,7 @@ const loginUser = async(values: ILoginInfo) => {
             username: values.username,
             password: values.password
         })
-    })
+    });
     const body = await userResponse.json();
 
     if (userResponse.status !== 200) {
