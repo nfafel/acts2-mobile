@@ -35,7 +35,7 @@ class ClosetHeader extends Component<ClosetHeaderProps, ClosetHeaderState> {
 
     render() {
         return (
-            <View style={{backgroundColor: "#e8e8e8", position: "relative"}}>
+            <View style={{backgroundColor: "#e8e8e8", position: "relative", height: 100}}>
                 <Text>{this.state.user ? this.state.user.username : "loading..."}</Text>
                 <Text>{this.state.user ? this.state.user.universityId : "loading..."}</Text>
                 <Menu style={{position: "absolute", right: 0, top: 5}}>

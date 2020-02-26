@@ -3,6 +3,7 @@ import { View, Text, TextInput, KeyboardAvoidingView, TouchableOpacity } from 'r
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import Incoming from './Incoming';
 import Outgoing from './Outgoing';
+
 type TransactionsProps = {
     
 }
@@ -14,31 +15,33 @@ const TransactionsRouter: React.FC<TransactionsProps> = () =>  {
     return (
         <Tab.Navigator
             initialRouteName="Incoming"
-            activeColor="black"
-            barStyle={{height: "8%", backgroundColor: "#c4c4c4"}}
+            tabBarOptions={{
+                labelStyle: {fontSize: 15, fontWeight: "bold"}
+            }}
+            style={{ backgroundColor: "black"}}
             labeled={false}
         >
             <Tab.Screen
                 name="Incoming"
                 component={Incoming}
-                options={{
-                    tabBarIcon: ({ focused, color}) => (
-                        <View style={{height: 40, width: 40}}>
+                // options={{
+                //     tabBarIcon: ({ focused, color}) => (
+                //         <View style={{height: 40, width: 40}}>
                             
-                        </View>
-                    ),
-                }}
+                //         </View>
+                //     ),
+                // }}
             />
             <Tab.Screen
                 name="Outgoing"
                 component={Outgoing}
-                options={{
-                    tabBarIcon: ({ focused, color }) => (
-                        <View style={{height: 40, width: 40}}>
-                            
-                        </View>
-                    ),
-                }}
+                // options={{
+                //     tabBarIcon: ({ focused, color }) => (
+                //         <View style={{height: 40, width: 40, backgroundColor: "blue"}}>
+                //             <Text>Hello</Text>
+                //         </View>
+                //     ),
+                // }}
             />
         </Tab.Navigator>
     )

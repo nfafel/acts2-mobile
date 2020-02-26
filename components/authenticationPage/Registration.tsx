@@ -1,6 +1,6 @@
 import React from 'react';
 import {Component} from 'react';
-import { View, TouchableOpacity, Text, TextInput, KeyboardAvoidingView, Alert } from 'react-native';
+import { View, TouchableOpacity, SafeAreaView, Text, TextInput, KeyboardAvoidingView, Alert } from 'react-native';
 import { Formik } from 'formik';
 
 import { storeJWT } from '../../redux/actions';
@@ -14,8 +14,8 @@ import { IUser } from '../../interfaces/IUser';
 const jwtDecode = require('jwt-decode');
 
 type CreateAccountProps = {
-    cancel: Function,
-    loginUser: Function
+    loginUser: Function,
+    navigation: any
 }
 
 class CreateAccount extends Component<CreateAccountProps> {
@@ -32,7 +32,7 @@ class CreateAccount extends Component<CreateAccountProps> {
 
     render() {
         return (
-            <View>
+            <View style={{flex: 0.8, justifyContent: "center"}}>
                 <Formik
                     initialValues = {{username: '', password: '', confirmationPassword: '', universityId: null}}
                     validationSchema={createAccountValidationSchema}
@@ -95,7 +95,7 @@ class CreateAccount extends Component<CreateAccountProps> {
                                 </TouchableOpacity>
                             </View>
 
-                            <TouchableOpacity style={{flexDirection:"row", justifyContent: "center"}} onPress={() => this.props.cancel()} >
+                            <TouchableOpacity style={{flexDirection:"row", justifyContent: "center"}} onPress={() => this.props.navigation.navigate("Login")} >
                                 <Text style={{color: "blue", fontSize: 17}}>Cancel</Text>
                             </TouchableOpacity>
                         </View>

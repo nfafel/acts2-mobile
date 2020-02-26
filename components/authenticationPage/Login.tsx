@@ -1,6 +1,6 @@
 import React from 'react';
 import {Component} from 'react';
-import { View, TouchableOpacity, Text, TextInput, KeyboardAvoidingView, Alert } from 'react-native';
+import { View, TouchableOpacity, Text, TextInput, KeyboardAvoidingView, Alert, SafeAreaView } from 'react-native';
 import { Formik } from 'formik';
 
 import { storeJWT } from '../../redux/actions';
@@ -10,7 +10,8 @@ import loginUser from '../../api/loginUser';
 import { ILoginInfo } from '../../interfaces/ILoginInfo';
 
 type LoginProps = {
-    loginUser: Function
+    loginUser: Function,
+    navigation: any
 }
 
 class Login extends Component<LoginProps> {
@@ -20,6 +21,7 @@ class Login extends Component<LoginProps> {
             const token: string = await loginUser(values);
             if (token) {
                 this.props.loginUser(token); //Storing token in redux
+                this.props.navigation.navigate("AuthenticatedRouter");
             }
         } catch(err) {
             if (err.statusCode === 403) {
@@ -29,6 +31,7 @@ class Login extends Component<LoginProps> {
                     Alert.alert("The password you entered is not correct.");
                 }
             } else {
+                Alert.alert(err.message);
                 console.log(err);
             }
         }
@@ -36,7 +39,7 @@ class Login extends Component<LoginProps> {
 
     render() {
         return (
-            <View>
+            <View style={{flex: 0.8, justifyContent: "center"}}>
                 <Formik
                     initialValues = {{username: '', password: ''}}
                     validationSchema={loginValidationSchema}
@@ -78,6 +81,9 @@ class Login extends Component<LoginProps> {
                                     <Text style={{flex: 1, flexDirection: "column", alignSelf: "center", textAlign: "center", fontSize: 17, color: "white"}}>Login</Text>
                                 </TouchableOpacity>
                             </View>
+                            <TouchableOpacity style={{flexDirection: "row", justifyContent: 'center'}} onPress={() => this.props.navigation.navigate("Registration")}>
+                                <Text style={{color: "blue"}} >Create an Account</Text>
+                            </TouchableOpacity>
                         </View>
                     }
                 </Formik>
