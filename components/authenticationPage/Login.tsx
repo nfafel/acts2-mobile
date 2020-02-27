@@ -21,7 +21,7 @@ class Login extends Component<LoginProps> {
             const token: string = await loginUser(values);
             if (token) {
                 this.props.loginUser(token); //Storing token in redux
-                this.props.navigation.navigate("AuthenticatedRouter");
+                this.props.navigation.navigate("AuthenticatedStack");
             }
         } catch(err) {
             if (err.statusCode === 403) {

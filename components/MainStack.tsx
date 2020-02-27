@@ -2,7 +2,7 @@ import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import Login from './authenticationPage/Login';
 import Registration from './authenticationPage/Registration';
-import AuthenticatedRouter from './AuthenticatedRouter';
+import AuthenticatedStack from './AuthenticatedStack';
 import { connect } from 'react-redux';
 
 const Stack = createStackNavigator();
@@ -14,7 +14,7 @@ type MainStackProps = {
 const MainStack: React.FC<MainStackProps> = ({ token }) => {
     return (
         <Stack.Navigator
-            initialRouteName={token === "" ? "Login" : "AuthenticatedRouter"}
+            initialRouteName={token === "" ? "Login" : "AuthenticatedStack"}
             headerMode="none"
         >
             <Stack.Screen
@@ -26,8 +26,8 @@ const MainStack: React.FC<MainStackProps> = ({ token }) => {
                 component={Registration}
             />
             <Stack.Screen
-                name="AuthenticatedRouter"
-                component={AuthenticatedRouter}
+                name="AuthenticatedStack"
+                component={AuthenticatedStack}
             />
         </Stack.Navigator>
     );

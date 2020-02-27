@@ -25,8 +25,16 @@ class CreateAccount extends Component<CreateAccountProps> {
         if (!available) {
             Alert.alert("Username already taken");
         } else {
-            const token: string = await createUser(newUser);
-            this.props.loginUser(token);
+            try {
+                const token: string = await createUser(newUser);
+                if (token) {
+                    this.props.loginUser(token);
+                    this.props.navigation.navigate("AuthenticatedStack");
+                }
+            } catch(err) {
+                Alert.alert("Error creating account, please try again");
+                console.log(err);
+            }
         }
     }
 

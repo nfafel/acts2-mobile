@@ -4,7 +4,7 @@ import { createMaterialBottomTabNavigator } from '@react-navigation/material-bot
 import FontAwesome5Icon from 'react-native-vector-icons/FontAwesome5';  
 import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIcons';  
 
-import ClosetStack from './closet/ClosetStack';
+import Closet from './closet/Closet';
 import Market from './market/Market';
 import Transactions from './transactions/TransactionsRouter';
 
@@ -17,20 +17,10 @@ const MainTabNav: React.FC = () => {
             activeColor="black"
             barStyle={{height: 50, backgroundColor: "#c4c4c4"}}
             labeled={false}
-            
-            // options = {({ navigation }) => {
-            //     let tabBarVisible = true;
-            //     if (navigation.state.index > 0) {
-            //       tabBarVisible = false;
-            //     }
-            //     return {
-            //       tabBarVisible,
-            //     };
-            // }}
         >
             <Tab.Screen
                 name="Closet"
-                component={ClosetStack}
+                component={Closet}
                 options={{
                     tabBarIcon: ({ focused, color}) => (
                         <View style={{height: 40, width: 40, marginTop: -10}}>

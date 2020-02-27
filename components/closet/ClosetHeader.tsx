@@ -11,7 +11,7 @@ const jwtDecode = require('jwt-decode');
 
 type ClosetHeaderProps = {
     logoutUser: Function,
-    token: string
+    token: string,
 }
 
 type ClosetHeaderState = {
@@ -44,7 +44,7 @@ class ClosetHeader extends Component<ClosetHeaderProps, ClosetHeaderState> {
                     </MenuTrigger>
                     <MenuOptions>
                         <MenuOption onSelect={() => Alert.alert("update")} text='Edit Profile' />
-                        <MenuOption onSelect={() => this.props.logoutUser()}><Text style={{color: "red"}}>Sign Out</Text></MenuOption>
+                        <MenuOption onSelect={() => this.props.logoutUser()} ><Text style={{color: "red"}}>Sign Out</Text></MenuOption>
                     </MenuOptions>
                 </Menu>
             </View>
