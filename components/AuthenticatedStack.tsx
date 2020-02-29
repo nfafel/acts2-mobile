@@ -3,7 +3,6 @@ import { createStackNavigator } from '@react-navigation/stack';
 
 import MainTabNav from './MainTabNav';
 import AddItem from './closet/AddItem';
-import Camera from './closet/Camera';
 
 const Stack = createStackNavigator();
 
@@ -24,10 +23,6 @@ const AuthenticatedStack: React.FC<AuthenticatedStackProps> = ({ token }) => {
             <Stack.Screen
                 name="AddItem"
                 component={AddItem}
-            />
-            <Stack.Screen
-                name="Camera"
-                component={Camera}
             />
         </Stack.Navigator>
     );

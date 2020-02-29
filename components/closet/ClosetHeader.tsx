@@ -1,12 +1,14 @@
 import React from 'react';
 import {Component} from 'react';
-import { View, Text, Alert, TextInput, KeyboardAvoidingView, TouchableOpacity } from 'react-native';
+import { View, Text, Alert, StyleSheet, KeyboardAvoidingView, TouchableOpacity } from 'react-native';
 import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIcons';  
 import { Menu, MenuOptions, MenuOption, MenuTrigger } from 'react-native-popup-menu';
 import { logoutUser } from '../../redux/actions';
 import { connect } from 'react-redux';
 import { IUser } from '../../interfaces/IUser';
 import getUser from '../../api/getUser';
+import {vh, vw} from '../../css/viewportUnits';
+
 const jwtDecode = require('jwt-decode');
 
 type ClosetHeaderProps = {
@@ -35,7 +37,7 @@ class ClosetHeader extends Component<ClosetHeaderProps, ClosetHeaderState> {
 
     render() {
         return (
-            <View style={{backgroundColor: "#e8e8e8", position: "relative", height: 100}}>
+            <View style={styles.mainView}>
                 <Text>{this.state.user ? this.state.user.username : "loading..."}</Text>
                 <Text>{this.state.user ? this.state.user.universityId : "loading..."}</Text>
                 <Menu style={{position: "absolute", right: 0, top: 5}}>
@@ -67,3 +69,11 @@ const mapStateToProps = function(state: any) {
 }
   
 export default connect(mapStateToProps, mapDispatchToProps)(ClosetHeader);
+
+const styles = StyleSheet.create({
+    mainView: {
+        backgroundColor: "#e8e8e8", 
+        position: "relative", 
+        height: 65*vh
+    }
+});

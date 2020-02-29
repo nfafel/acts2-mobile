@@ -3,6 +3,7 @@ import { View, Text, TouchableOpacity, Image } from 'react-native';
 import ClosetHeader from './ClosetHeader';
 import Item from '../Item';
 import FontAwesome5Icon from 'react-native-vector-icons/FontAwesome5';  
+import {vw, vh} from '../../css/viewportUnits';
 
 type ClosetProps = {
     navigation: any
@@ -18,7 +19,7 @@ class Closet extends Component<ClosetProps, ClosetState> {
         super(props);
         this.state = {
             addNewOpen: false,
-            closetItems: [{}, {}, {}],
+            closetItems: [{}],
         }
     }
 
@@ -40,7 +41,7 @@ class Closet extends Component<ClosetProps, ClosetState> {
                                 <FontAwesome5Icon 
                                     name="plus-square"
                                     color="black"
-                                    size={40}
+                                    size={40*vw}
                                 />
                             </TouchableOpacity>
                             <Text style={{fontSize: 20, fontFamily: "marker felt", alignSelf: "center", marginLeft: 10}}>Add items to your closet</Text>
@@ -56,15 +57,15 @@ class Closet extends Component<ClosetProps, ClosetState> {
                 <View>
                     <TouchableOpacity 
                         onPress={() => this.props.navigation.navigate("AddItem")} 
-                        style={{position: "absolute", right: 15, top: 15}}
+                        style={{position: "absolute", right: 10*vw, top: 10*vh}}
                     >
                         <FontAwesome5Icon 
                             name="plus-square"
                             color="black"
-                            size={40}
+                            size={40*vw}
                         />
                     </TouchableOpacity>
-                    <Text style={{fontSize: 28, fontFamily: "marker felt", alignSelf: "center", marginTop: 22}}>My Closet</Text>
+                    <Text style={{fontSize: 25*vh, fontFamily: "marker felt", alignSelf: "center", marginTop: 10}}>My Closet</Text>
                 </View>
                 {this.getClosetItems()}
             </View>

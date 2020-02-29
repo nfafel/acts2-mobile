@@ -15,7 +15,7 @@ const MainTabNav: React.FC = () => {
         <Tab.Navigator
             initialRouteName="Closet"
             activeColor="black"
-            barStyle={{height: 50, backgroundColor: "#c4c4c4"}}
+            barStyle={{height: "7%", backgroundColor: "#c4c4c4"}}
             labeled={false}
         >
             <Tab.Screen
@@ -23,11 +23,12 @@ const MainTabNav: React.FC = () => {
                 component={Closet}
                 options={{
                     tabBarIcon: ({ focused, color}) => (
-                        <View style={{height: 40, width: 40, marginTop: -10}}>
+                        <View style={{height: "200%", width: "170%", marginTop: "-20%"}}>
                             <MaterialCommunityIcon 
                                 name={focused ? "tshirt-crew" : "tshirt-crew-outline"}
                                 color={color}
                                 size={40}
+                                style={{width: 40, height: 40, flex: 1}}
                             />
                         </View>
                     ),
@@ -38,7 +39,7 @@ const MainTabNav: React.FC = () => {
                 component={Market}
                 options={{
                     tabBarIcon: ({ focused, color }) => (
-                        <View style={{height: 40, width: 40, marginTop: -10}}>
+                        <View style={{height: "200%", width: "170%", marginTop: "-20%"}}>
                             <MaterialCommunityIcon 
                                 name={focused ? "cart" : "cart-outline"}
                                 color={color} 
@@ -53,7 +54,7 @@ const MainTabNav: React.FC = () => {
                 component={Transactions}
                 options={{
                     tabBarIcon: ({ focused, color }) => (
-                        <View style={{height: 40, width: 53, marginTop: -10}}>
+                        <View style={{height: "200%", width: "220%", marginTop: "-20%"}}>
                             <FontAwesome5Icon 
                                 name="handshake" 
                                 color={color} 

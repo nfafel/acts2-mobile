@@ -6,7 +6,7 @@ export interface ILoginInfo {
     universityId: typeof ObjectId,
     images: string[], //Change to IImage[]
     gender: string,
-    qualityRating: number,
+    quality: number,
     brand: string,
     size: string,
     value?: string,

@@ -10,10 +10,9 @@ export default Yup.object().shape({
     brand: Yup.string()
         .required('Required'),
     size: Yup.string()
-        .required('Required')
-        .oneOf([Yup.ref('password'), null], "Passwords Don't Match"),
+        .required('Required'),
     value: Yup.string()
         .required('Required'),
-    qualityRating: Yup.number()
+    quality: Yup.number()
         .required('Required'),
 })
