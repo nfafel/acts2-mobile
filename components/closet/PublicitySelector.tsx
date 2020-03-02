@@ -45,6 +45,7 @@ const styles = StyleSheet.create({
     mainView: {
         flexDirection: "row", 
         marginHorizontal: 30*vw, 
+        marginTop: 10*vh,
         height: 30*vh
     }
 });

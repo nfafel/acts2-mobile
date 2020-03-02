@@ -18,10 +18,8 @@ const App: React.FC = () => {
       <PersistGate loading={null} persistor={persistor}>
         <MenuProvider>
           <NavigationContainer>
-            <SafeAreaView style={{flex: 1}}>
-              <StatusBar barStyle="dark-content" />
-              <MainStack />
-            </SafeAreaView>
+            <StatusBar barStyle="dark-content" />
+            <MainStack />
           </NavigationContainer>
         </MenuProvider>
       </PersistGate>

@@ -11,5 +11,6 @@ export interface ILoginInfo {
     size: string,
     value?: string,
     publicity: string,
-    createdAt: Date
+    createdAt: Date,
+    clothingType: string
 }

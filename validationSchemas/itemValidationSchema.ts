@@ -1,4 +1,5 @@
 import * as Yup from 'yup';
+import {IClothingType} from '../interfaces/IClothingType';
 
 export default Yup.object().shape({
     images: Yup.array()
@@ -15,4 +16,13 @@ export default Yup.object().shape({
         .required('Required'),
     quality: Yup.number()
         .required('Required'),
+    clothingType: Yup.mixed()
+        .required("Required")
+        .test("Clothing Type Test", "Required", (clothingType: IClothingType) => {
+            if (clothingType.name !== "Select") {
+                return true;
+            }
+            return false;
+        })
+        .required("Required"),
 })

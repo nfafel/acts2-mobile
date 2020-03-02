@@ -3,13 +3,13 @@ import { View, Modal, Text, SafeAreaView, TouchableOpacity } from 'react-native'
 import { RNCamera } from 'react-native-camera';
 import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIcons';  
 
-type CameraProps = {
+type CameraModalProps = {
     open: boolean,
     closeCamera: Function,
     submitPicture: Function
 }
 
-const Camera: React.FC<CameraProps> = (props: CameraProps) => {
+const CameraModal: React.FC<CameraModalProps> = (props: CameraModalProps) => {
     let camera: any;
 
     const takePicture = async() => {
@@ -52,4 +52,4 @@ const Camera: React.FC<CameraProps> = (props: CameraProps) => {
     )
 }
 
-export default Camera;
+export default CameraModal;

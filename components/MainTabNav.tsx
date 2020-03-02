@@ -3,7 +3,7 @@ import { View, SafeAreaView } from 'react-native';
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
 import FontAwesome5Icon from 'react-native-vector-icons/FontAwesome5';  
 import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIcons';  
-
+import {vh, vw} from '../css/viewportUnits';
 import Closet from './closet/Closet';
 import Market from './market/Market';
 import Transactions from './transactions/TransactionsRouter';
@@ -15,7 +15,7 @@ const MainTabNav: React.FC = () => {
         <Tab.Navigator
             initialRouteName="Closet"
             activeColor="black"
-            barStyle={{height: "7%", backgroundColor: "#c4c4c4"}}
+            barStyle={{backgroundColor: "#c4c4c4"}}
             labeled={false}
         >
             <Tab.Screen
@@ -23,12 +23,11 @@ const MainTabNav: React.FC = () => {
                 component={Closet}
                 options={{
                     tabBarIcon: ({ focused, color}) => (
-                        <View style={{height: "200%", width: "170%", marginTop: "-20%"}}>
+                        <View style={{height: 28*vh, width: 28*vh}}>
                             <MaterialCommunityIcon 
                                 name={focused ? "tshirt-crew" : "tshirt-crew-outline"}
                                 color={color}
-                                size={40}
-                                style={{width: 40, height: 40, flex: 1}}
+                                size={28*vh}
                             />
                         </View>
                     ),
@@ -39,11 +38,11 @@ const MainTabNav: React.FC = () => {
                 component={Market}
                 options={{
                     tabBarIcon: ({ focused, color }) => (
-                        <View style={{height: "200%", width: "170%", marginTop: "-20%"}}>
+                        <View style={{height: 28*vh, width: 28*vh}}>
                             <MaterialCommunityIcon 
                                 name={focused ? "cart" : "cart-outline"}
                                 color={color} 
-                                size={40}
+                                size={28*vh}
                             />
                         </View>
                     ),
@@ -54,11 +53,11 @@ const MainTabNav: React.FC = () => {
                 component={Transactions}
                 options={{
                     tabBarIcon: ({ focused, color }) => (
-                        <View style={{height: "200%", width: "220%", marginTop: "-20%"}}>
+                        <View style={{height: 28*vh, width: 36*vh, marginTop: -0*vh}}>
                             <FontAwesome5Icon 
                                 name="handshake" 
-                                color={color} 
-                                size={40} 
+                                color={color}
+                                size={28*vh} 
                                 solid={focused} />
                         </View>
                     ),

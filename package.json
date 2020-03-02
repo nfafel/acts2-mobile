@@ -21,6 +21,7 @@
     "formik": "^2.1.4",
     "jwt-decode": "^2.2.0",
     "mongoose": "^5.9.1",
+    "native-base": "^2.13.8",
     "react": "16.9.0",
     "react-native": "0.61.5",
     "react-native-camera": "^3.18.0",

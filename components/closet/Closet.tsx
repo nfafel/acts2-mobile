@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import { View, Text, TouchableOpacity, Image } from 'react-native';
+import { View, Text, TouchableOpacity, SafeAreaView } from 'react-native';
 import ClosetHeader from './ClosetHeader';
 import Item from '../Item';
 import FontAwesome5Icon from 'react-native-vector-icons/FontAwesome5';  
@@ -30,7 +30,7 @@ class Closet extends Component<ClosetProps, ClosetState> {
     render() {
         if (this.state.closetItems.length === 0) {
             return (
-                <View>
+                <SafeAreaView>
                     <ClosetHeader />
                     <View style={{margin: 20}}>
                         <Text style={{fontSize: 30, fontFamily: "marker felt"}}>
@@ -47,12 +47,12 @@ class Closet extends Component<ClosetProps, ClosetState> {
                             <Text style={{fontSize: 20, fontFamily: "marker felt", alignSelf: "center", marginLeft: 10}}>Add items to your closet</Text>
                         </View>
                     </View>
-                </View>
+                </SafeAreaView>
             )
         }
 
         return (
-            <View>
+            <SafeAreaView>
                 <ClosetHeader />
                 <View>
                     <TouchableOpacity 
@@ -68,7 +68,7 @@ class Closet extends Component<ClosetProps, ClosetState> {
                     <Text style={{fontSize: 25*vh, fontFamily: "marker felt", alignSelf: "center", marginTop: 10}}>My Closet</Text>
                 </View>
                 {this.getClosetItems()}
-            </View>
+            </SafeAreaView>
         )
     }
 }

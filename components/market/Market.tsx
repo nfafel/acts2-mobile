@@ -1,6 +1,6 @@
 import React from 'react';
 import {Component} from 'react';
-import { View, Text, TextInput, KeyboardAvoidingView, TouchableOpacity } from 'react-native';
+import { View, Text, SafeAreaView, TextInput, KeyboardAvoidingView, TouchableOpacity } from 'react-native';
 
 type MarketProps = {
     
@@ -20,9 +20,9 @@ class Market extends Component<MarketProps, MarketState> {
 
     render() {
         return (
-            <View>
+            <SafeAreaView style={{flex: 1}}>
                 <Text>Market</Text>
-            </View>
+            </SafeAreaView>
         )
     }
 }
