@@ -1,4 +1,6 @@
+import {IClosetItem} from '../interfaces/IClosetItem';
 
 export interface IReduxState {
-    token: string
+    token: string,
+    closetItemsWImages: IClosetItem[]
 }

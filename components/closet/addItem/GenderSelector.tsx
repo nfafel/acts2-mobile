@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, Text, TouchableOpacity, Image, StyleSheet } from 'react-native';
-import {vw, vh} from '../../css/viewportUnits';
+import {vw, vh} from '../../../css/viewportUnits';
 
 type GenderSelectorProps = {
     gender: string,
@@ -22,21 +22,21 @@ const GenderSelector: React.FC<GenderSelectorProps> = ({gender, setGender}) => {
                 onPress={() => setGender("female")} 
                 style={{alignItems: "center", padding: 10, ...getTouchableOpacityStyle("female")}} 
             >
-                <Image source={require('../../assets/female.png')} style={styles.image} />
+                <Image source={require('../../../assets/female.png')} style={styles.image} />
                 <Text>Girls</Text>
             </TouchableOpacity>
             <TouchableOpacity
                 onPress={() => setGender("unisex")}
                 style={{alignItems: "center", marginHorizontal: 30, padding: 10, ...getTouchableOpacityStyle("unisex")}} 
             >
-                <Image source={require('../../assets/unisex.png')} style={styles.image} />
+                <Image source={require('../../../assets/unisex.png')} style={styles.image} />
                 <Text>Unisex</Text>
             </TouchableOpacity>
             <TouchableOpacity
                 onPress={() => setGender("male")} 
                 style={{alignItems: "center", padding: 10, ...getTouchableOpacityStyle("male")}} 
             >
-                <Image source={require('../../assets/male.png')} style={styles.image} />
+                <Image source={require('../../../assets/male.png')} style={styles.image} />
                 <Text>Boys</Text>
             </TouchableOpacity>
         </View>

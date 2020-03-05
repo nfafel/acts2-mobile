@@ -1,37 +1,63 @@
 import React, {Component} from 'react';
-import { View, Text, TouchableOpacity, SafeAreaView } from 'react-native';
+import { View, Text, TouchableOpacity, SafeAreaView, ScrollView, Alert } from 'react-native';
 import ClosetHeader from './ClosetHeader';
 import Item from '../Item';
+import { connect } from 'react-redux';
 import FontAwesome5Icon from 'react-native-vector-icons/FontAwesome5';  
 import {vw, vh} from '../../css/viewportUnits';
+import { IClosetItemWImages } from '../../interfaces/IClosetItemWImages';
+import getUserCloset from '../../api/getUserCloset';
+import {setClosetItems} from '../../redux/actions';
+const jwtDecode = require('jwt-decode');
 
 type ClosetProps = {
-    navigation: any
+    navigation: any,
+    closetItemsWImages: IClosetItemWImages[],
+    initClosetItemsWImages: Function,
+    token: string
 }
 
-type ClosetState = {
-    addNewOpen: boolean,
-    closetItems: any[]  //change to item type
-}
-
-class Closet extends Component<ClosetProps, ClosetState> {
-    constructor(props: ClosetProps) {
-        super(props);
-        this.state = {
-            addNewOpen: false,
-            closetItems: [{}],
+class Closet extends Component<ClosetProps> {
+    
+    async componentDidMount() {
+        this.props.initClosetItemsWImages([]);
+        try {
+            const decoded = jwtDecode(this.props.token);
+            const closetItems: IClosetItemWImages[] = await getUserCloset(decoded.payload.username);
+            this.props.initClosetItemsWImages(closetItems);
+        } catch(err) {
+            console.log(err);
+            Alert.alert("An error occured. Please log out and log back in")
         }
     }
 
     getClosetItems() {
-        return this.state.closetItems.map((item, i) => <Item key={i} data={item} /> )
+        let closetView: JSX.Element[] = [];
+        for (var i=0; i<this.props.closetItemsWImages.length; i+=2) {
+            closetView.push(
+                <View key={i} style={{flexDirection: "row"}}>
+                    <Item closetItemWImages={this.props.closetItemsWImages[i]} /> 
+                    {(i+1 < this.props.closetItemsWImages.length) ? 
+                        <Item closetItemWImages={this.props.closetItemsWImages[i+1]} /> 
+                    :
+                        <View style={{flex:1, margin: 5*vw}}></View>
+                    }
+                </View>
+            )
+        }
+
+        return (
+            <ScrollView>
+                {closetView}
+            </ScrollView>
+        )
     }
 
     render() {
-        if (this.state.closetItems.length === 0) {
+        if (this.props.closetItemsWImages.length === 0) {
             return (
-                <SafeAreaView>
-                    <ClosetHeader />
+                <SafeAreaView style={{backgroundColor: "white", flex: 1}}>
+                    <ClosetHeader navigateToLogin={() => this.props.navigation.navigate("Login")} />
                     <View style={{margin: 20}}>
                         <Text style={{fontSize: 30, fontFamily: "marker felt"}}>
                             Your closet is empty!
@@ -52,8 +78,8 @@ class Closet extends Component<ClosetProps, ClosetState> {
         }
 
         return (
-            <SafeAreaView>
-                <ClosetHeader />
+            <SafeAreaView style={{backgroundColor: "white", flex: 1}}>
+                <ClosetHeader navigateToLogin={() => this.props.navigation.navigate("Login")} />
                 <View>
                     <TouchableOpacity 
                         onPress={() => this.props.navigation.navigate("AddItem")} 
@@ -73,4 +99,19 @@ class Closet extends Component<ClosetProps, ClosetState> {
     }
 }
 
-export default Closet;
+const mapStateToProps = function(state: any) {
+    return {
+        closetItemsWImages: state.closetItemsWImages,
+        token: state.token
+    }
+}
+
+const mapDispatchToProps = function(dispatch: any) {
+    return {
+        initClosetItemsWImages: (closetItemsWImages: IClosetItemWImages[]) => {
+            dispatch(setClosetItems({closetItemsWImages: closetItemsWImages}))
+        },
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Closet);

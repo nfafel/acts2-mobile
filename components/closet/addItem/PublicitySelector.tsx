@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import { View, Text, TouchableOpacity, Image, StyleSheet } from 'react-native';
-import {vw, vh} from '../../css/viewportUnits';
+import {vw, vh} from '../../../css/viewportUnits';
 
 type PublicitySelectorProps = {
     publicity: string,
@@ -18,22 +18,22 @@ const PublicitySelector: React.FC<PublicitySelectorProps> = ({publicity, setPubl
     return (
         <View style={styles.mainView}>
             <TouchableOpacity
-                style={{borderColor: "black", borderWidth: 2, borderBottomWidth: 4, flex: 1, justifyContent: "center", backgroundColor: getButtonColor("give")}}
-                onPress={() => setPublicity('give')}
+                style={{borderColor: "black", borderWidth: 2, borderBottomWidth: 4, flex: 1, justifyContent: "center", backgroundColor: getButtonColor("market")}}
+                onPress={() => setPublicity('market')}
             >
                 <Text style={{fontSize: 16*vh, alignSelf: "center", fontFamily: "Trebuchet MS"}}>Market</Text>
             </TouchableOpacity>
             <TouchableOpacity
-                style={{borderColor: "black", borderWidth: 2, borderLeftWidth: 0, borderBottomWidth: 4, flex: 1, justifyContent: "center", backgroundColor: getButtonColor("sell")}}
-                onPress={() => setPublicity('sell')}
+                style={{borderColor: "black", borderWidth: 2, borderLeftWidth: 0, borderBottomWidth: 4, flex: 1, justifyContent: "center", backgroundColor: getButtonColor("free")}}
+                onPress={() => setPublicity('free')}
             >
                 <Text style={{fontSize: 16*vh, alignSelf: "center", fontFamily: "Trebuchet MS"}}>Free</Text>
             </TouchableOpacity>
             <TouchableOpacity
-                style={{borderColor: "black", borderWidth: 2, borderLeftWidth: 0, borderBottomWidth: 4, borderRightWidth: 5, flex: 1, justifyContent: "center", backgroundColor: getButtonColor("keep")}}
-                onPress={() => setPublicity('keep')}
+                style={{borderColor: "black", borderWidth: 2, borderLeftWidth: 0, borderBottomWidth: 4, borderRightWidth: 5, flex: 1, justifyContent: "center", backgroundColor: getButtonColor("private")}}
+                onPress={() => setPublicity('private')}
             >
-                <Text style={{fontSize: 16*vh, alignSelf: "center", fontFamily: "Trebuchet MS"}}>Hidden</Text>
+                <Text style={{fontSize: 16*vh, alignSelf: "center", fontFamily: "Trebuchet MS"}}>Private</Text>
             </TouchableOpacity>
         </View>
     )

@@ -1,36 +1,61 @@
 import React, {useState} from 'react';
-import { View, Text, StyleSheet, SafeAreaView, TouchableOpacity, KeyboardAvoidingView, TextInput, ScrollView, Image} from 'react-native';
+import { View, Text, StyleSheet, SafeAreaView, TouchableOpacity, KeyboardAvoidingView, TextInput, ScrollView, Image, Alert} from 'react-native';
 import { Header, Left, Right, Title } from 'native-base';
 import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIcons';  
 import PublicitySelector from './PublicitySelector';
 import GenderSelector from './GenderSelector';
-import { Formik, FieldArray } from 'formik';
+import PhotoSelector from './PhotoSelector';
 import QualitySelector from './QualitySelector';
-import {IImage} from '../../interfaces/IImage';
-import {vw, vh} from '../../css/viewportUnits';
-import CameraModal from './CameraModal';
-import itemValidationSchema from '../../validationSchemas/itemValidationSchema';
-import { IClothingType } from '../../interfaces/IClothingType';
-import uploadImage from '../../api/uploadImage';
-import getImage from '../../api/getImage';
-import ClothingTypeSelectorModal from './ClothingTypeSelectorModal';
+import { Formik } from 'formik';
+import {vw, vh} from '../../../css/viewportUnits';
+import itemValidationSchema from '../../../validationSchemas/itemValidationSchema';
+import { IClothingType } from '../../../interfaces/IClothingType';
+import uploadClosetItem from '../../../api/uploadClosetItem';
+import ClothingTypeSelector from './ClothingTypeSelector';
+import { IClosetItem } from '../../../interfaces/IClosetItem';
+import { addClosetItem } from '../../../redux/actions';
+import { connect } from 'react-redux';
+import { IClosetItemWImages } from '../../../interfaces/IClosetItemWImages';
+import { INewClosetItem } from '../../../interfaces/INewClosetItem';
+const jwtDecode = require('jwt-decode');
 
 type AddNewItemProps = {
     navigation: any,
-    route: any
+    token: string,
+    addItem: Function
 }
 
-const AddNewItem: React.FC<AddNewItemProps> = ({ navigation, route }) => {
-    const [cameraOpen, setCameraOpen] = useState<boolean>(false);
-    const [clothingTypeSelectorOpen, setClothingTypeSelectorOpen] = useState<boolean>(false);
-
-    const handleSubmit = (values: any) => {
-        navigation.navigate("MainTabNav");
-        console.log(values);
+const AddNewItem: React.FC<AddNewItemProps> = ({ navigation, token, addItem }) => {
+    const handleSubmit = async(values: any) => {
+        try {
+            const decoded = jwtDecode(token);
+            const newClosetItemData: INewClosetItem = {
+                username: decoded.payload.username,
+                universityId: decoded.payload.universityId,
+                images: values.images,
+                publicity: values.publicity,
+                gender: values.gender,
+                quality: values.quality,
+                brand: values.brand,
+                size: values.size,
+                value: values.value,
+                clothingType: values.clothingType.name
+            };
+            const newClosetItem: IClosetItem = await uploadClosetItem(newClosetItemData);
+            const newClosetItemWImages: IClosetItemWImages = {
+                closetItem: newClosetItem,
+                images: values.images.map((image: any) => image.base64)
+            }
+            addItem(newClosetItemWImages);
+            navigation.navigate("MainTabNav");
+        } catch(err) {
+            console.log(err);
+            Alert.alert("An error occured in adding the item. Please check internet connections and retry")
+        }
     }
 
     const initClothingType: IClothingType = {
-        image: require('../../assets/select.png'),
+        image: require('../../../assets/select.png'),
         name: "Select"
     }
     // upload() {
@@ -56,20 +81,14 @@ const AddNewItem: React.FC<AddNewItemProps> = ({ navigation, route }) => {
 
             <SafeAreaView/>
                 <Formik
-                    initialValues = {{ images: [], publicity: "give", gender: "female", brand: "", size: "", value: "", quality: 0, clothingType: initClothingType}}
+                    initialValues = {{ images: [], publicity: "market", gender: "female", brand: "", size: "", value: "", quality: 0, clothingType: initClothingType}}
                     validationSchema={itemValidationSchema}
                     onSubmit = {(values) => handleSubmit(values)}
                 >
                     {({values, handleSubmit, handleChange, setFieldValue}) => 
                         <ScrollView>
                             <PublicitySelector publicity={values.publicity} setPublicity={handleChange("publicity")} />
-                            
-                            <TouchableOpacity onPress={() => setClothingTypeSelectorOpen(true)} style={{alignSelf: "center", marginTop: 10*vh}}>
-                                <Image source={values.clothingType.image} style={{height: 70*vh, width: 85*vh, resizeMode: "stretch"}} />
-                                {values.clothingType.name !== "Select" && <Text style={{alignSelf: "center"}}>{values.clothingType.name}</Text>}
-                            </TouchableOpacity>
-                            <ClothingTypeSelectorModal open={clothingTypeSelectorOpen} close={() => setClothingTypeSelectorOpen(false)} submitType={(clothingType: IClothingType) => setFieldValue("clothingType", clothingType, true)} />
-                            
+                            <ClothingTypeSelector clothingType={values.clothingType} submitType={(clothingType: IClothingType) => setFieldValue("clothingType", clothingType, true)} />
                             <GenderSelector gender={values.gender} setGender={handleChange("gender")} />
                             <QualitySelector quality={values.quality} setQuality={(quality: number) => setFieldValue("quality", quality, true)}/>
 
@@ -115,44 +134,7 @@ const AddNewItem: React.FC<AddNewItemProps> = ({ navigation, route }) => {
                                 </View>
                             </KeyboardAvoidingView> 
 
-                            <View style={{margin: 20}}>
-                                <Text style={{fontSize: 18, fontFamily: "marker felt"}}>Photos:</Text>
-                                <View style={{flexDirection: "row", marginTop: 8, alignItems: "center"}}>
-                                    <FieldArray
-                                        name="images"
-                                        render={arrayHelpers => (
-                                            <View style={{width: "70%"}}>
-                                                <ScrollView horizontal>
-                                                    {values.images.map((image: IImage, index) => (
-                                                        <TouchableOpacity 
-                                                            onPress={() => {
-                                                                arrayHelpers.remove(index)
-                                                            }}
-                                                            key={index} 
-                                                            style={{marginRight: 10}}
-                                                        >
-                                                            <Image source={{uri: image.uri}} style={{width: 100, height: 100}} />
-                                                        </TouchableOpacity>
-                                                    ))}
-                                                </ScrollView>
-                                            </View>
-                                        )}
-                                    />
-                                    <TouchableOpacity
-                                        onPress={() => setCameraOpen(true)}
-                                        style={{borderWidth: 1, height: 60*vh, width: 90*vw, borderRadius: 15, padding: 5, marginLeft: 10}}
-                                    >
-                                        <MaterialCommunityIcon name="camera" size={80} color="#96beeb" />
-                                        <CameraModal 
-                                            open={cameraOpen} 
-                                            closeCamera={() => setCameraOpen(false)}
-                                            submitPicture={(newImage: IImage) => {
-                                                setFieldValue("images", [...values.images, newImage], true)
-                                            }} 
-                                        />
-                                    </TouchableOpacity>
-                                </View>
-                            </View>
+                            <PhotoSelector setFieldValue={setFieldValue} values={values} />
 
                             <TouchableOpacity onPress={handleSubmit} style={{margin: 20}} >
                                 <View style={{flexDirection: "row", justifyContent: "center", borderColor: "black", borderBottomWidth: 3, borderRightWidth: 3, borderTopWidth: 1, borderLeftWidth: 1, borderRadius: 2}}>
@@ -169,10 +151,27 @@ const AddNewItem: React.FC<AddNewItemProps> = ({ navigation, route }) => {
     )
 }
 
-export default AddNewItem;
+const mapDispatchToProps = function(dispatch: any) {
+    return {
+        addItem: (closetItem: IClosetItemWImages) => {
+            dispatch( addClosetItem({
+                newItem: closetItem, 
+            }))
+        },
+    }
+}
+
+const mapStateToProps = function(state: any) {
+    return {
+        token: state.token,
+    }
+}
+  
+export default connect(mapStateToProps, mapDispatchToProps)(AddNewItem);
 
 const styles = StyleSheet.create({
     title: {
+        color: "black",
         alignSelf: "center", 
         fontSize: 20*vh, 
         fontFamily: "Trebuchet MS"

@@ -2,6 +2,7 @@ import React from 'react';
 import {Component} from 'react';
 import { View, TouchableOpacity, SafeAreaView, Text, TextInput, KeyboardAvoidingView, Alert } from 'react-native';
 import { Formik } from 'formik';
+import { Form, Item, Input, Label } from 'native-base';
 
 import { storeJWT } from '../../redux/actions';
 import { connect } from 'react-redux';
@@ -49,52 +50,45 @@ class CreateAccount extends Component<CreateAccountProps> {
                     {({values, errors, submitForm, handleChange, touched, setFieldValue}) => 
                         <View style={{marginHorizontal: 20}} >
                             <Text style={{fontSize: 25, margin: 7, textAlign: "center"}}>Create Account</Text>
-                            <KeyboardAvoidingView style={{marginTop: 15, marginBottom: 10}}>
-                                <View style={{flexDirection: "column", justifyContent: "center", borderWidth: 0.5, borderRadius: 3, backgroundColor: "#f7f7f7", height: 50 }} >
-                                    {(values.username !== '') && <Text style={{marginLeft: 5, color: "grey"}}>Username:</Text>}
-                                    <TextInput 
-                                        placeholder="Username"
+                            <Form>
+                                <Item floatingLabel >
+                                    <Label>Username</Label>
+                                    <Input 
                                         onChangeText={handleChange('username')}
                                         value={values.username}
-                                        style={{marginLeft: 5, fontSize: 16}}
+                                        style={{marginLeft: 5, fontSize: 20}}
                                     />
-                                </View>
+                                </Item>
                                 {(errors.username && touched.username) &&
-                                    <Text style={{color: 'red'}}>{errors.username}</Text>
+                                    <Text style={{color: 'red', marginLeft: 12}}>{errors.username}</Text>
                                 }
-                            </KeyboardAvoidingView>
-                            <KeyboardAvoidingView>
-                                <View style={{borderWidth: 0.5, borderRadius: 3, backgroundColor: "#f7f7f7", height: 50, flexDirection: "column", justifyContent: "center"}} >
-                                    {(values.password !== '') && <Text style={{marginLeft: 5, color: "grey"}}>Password:</Text>}
-                                    <TextInput 
+                                <Item floatingLabel >
+                                    <Label>Password</Label>
+                                    <Input 
                                         onChangeText={handleChange('password')}
                                         value={values.password}
-                                        placeholder="Password" 
                                         secureTextEntry
-                                        style={{marginLeft: 5, fontSize: 16}}
+                                        style={{marginLeft: 5, fontSize: 20}}
                                     />
-                                </View>
+                                </Item>
                                 {(errors.password && touched.password) &&
                                     <Text style={{color: 'red'}}>{errors.password}</Text>
                                 }
-                            </KeyboardAvoidingView>
-
-                            <KeyboardAvoidingView style={{marginVertical: 10}}>
-                                <View style={{borderWidth: 0.5, borderRadius: 3, backgroundColor: "#f7f7f7", height: 50, flexDirection: "column", justifyContent: "center"}} >
-                                    {(values.confirmationPassword !== '') && <Text style={{marginLeft: 5, color: "grey"}}>Confirm password:</Text>}
-                                    <TextInput 
+                                <Item floatingLabel >
+                                    <Label>Confirm password</Label>
+                                    <Input 
                                         onChangeText={handleChange('confirmationPassword')}
                                         value={values.confirmationPassword}
                                         placeholder="Confirm password" 
                                         secureTextEntry
-                                        style={{marginLeft: 5, fontSize: 16}}
+                                        style={{marginLeft: 5, fontSize: 20}}
                                     />
-                                </View>
+                                </Item>
                                 {(errors.confirmationPassword && touched.confirmationPassword) &&
                                     <Text style={{color: 'red'}}>{errors.confirmationPassword}</Text>
                                 }
-                            </KeyboardAvoidingView>
-
+                            </Form>
+                                                       
                             <UniversitySelector setFieldValue={setFieldValue} values={values} errors={errors} touched={touched} />
                             
                             <View style={{marginHorizontal: 20, marginVertical: 10 }}>

@@ -1,7 +1,7 @@
 import mongoose = require('mongoose');
 var ObjectId = mongoose.Schema.Types.ObjectId;
 
-export interface ILoginInfo {
+export interface IClosetItem {
     username: string,
     universityId: typeof ObjectId,
     images: string[], //Change to IImage[]

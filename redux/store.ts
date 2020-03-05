@@ -5,8 +5,12 @@ import {IReduxState} from '../interfaces/IReduxState';
 
 const LOGIN_USER = "LOGIN_USER";
 const LOGOUT_USER = "LOGOUT_USER";
+const ADD_CLOSET_ITEM = "ADD_CLOSET_ITEM";
+const SET_CLOSET_ITEMS = "SET_CLOSET_ITEMS";
+
 const initialState: IReduxState = {
     token: "",
+    closetItemsWImages: []
 };
 
 function rootReducer(state = initialState, action: any) {
@@ -17,8 +21,15 @@ function rootReducer(state = initialState, action: any) {
         case LOGOUT_USER:
             return Object.assign({}, state, {token: ""});
 
+        case ADD_CLOSET_ITEM: 
+            const newClosetItemsWImages = [...state.closetItemsWImages, action.payload.newItem];
+            return Object.assign({}, state, {closetItemsWImages: newClosetItemsWImages});
+
+        case SET_CLOSET_ITEMS:
+            return Object.assign({}, state, action.payload);
+        
         default: 
-            return state
+            return state;
     }
 };
 

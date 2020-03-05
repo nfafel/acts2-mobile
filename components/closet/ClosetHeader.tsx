@@ -1,6 +1,6 @@
 import React from 'react';
 import {Component} from 'react';
-import { View, Text, Alert, StyleSheet, KeyboardAvoidingView, TouchableOpacity } from 'react-native';
+import { View, Text, Alert, StyleSheet } from 'react-native';
 import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIcons';  
 import { Menu, MenuOptions, MenuOption, MenuTrigger } from 'react-native-popup-menu';
 import { logoutUser } from '../../redux/actions';
@@ -14,6 +14,7 @@ const jwtDecode = require('jwt-decode');
 type ClosetHeaderProps = {
     logoutUser: Function,
     token: string,
+    navigateToLogin: Function,
 }
 
 type ClosetHeaderState = {
@@ -34,6 +35,11 @@ class ClosetHeader extends Component<ClosetHeaderProps, ClosetHeaderState> {
         this.setState({user: user});
     }
 
+    handleLogout() {
+        this.props.logoutUser();
+        this.props.navigateToLogin();
+    }
+
 
     render() {
         return (
@@ -46,7 +52,7 @@ class ClosetHeader extends Component<ClosetHeaderProps, ClosetHeaderState> {
                     </MenuTrigger>
                     <MenuOptions>
                         <MenuOption onSelect={() => Alert.alert("update")} text='Edit Profile' />
-                        <MenuOption onSelect={() => this.props.logoutUser()} ><Text style={{color: "red"}}>Sign Out</Text></MenuOption>
+                        <MenuOption onSelect={() => this.handleLogout()} ><Text style={{color: "red"}}>Sign Out</Text></MenuOption>
                     </MenuOptions>
                 </Menu>
             </View>
