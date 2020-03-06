@@ -2,6 +2,7 @@ import { createStore } from "redux";
 import { persistStore, persistReducer } from 'redux-persist'
 import AsyncStorage from '@react-native-community/async-storage'
 import {IReduxState} from '../interfaces/IReduxState';
+import { IClosetItemWImages } from "../interfaces/IClosetItemWImages";
 
 const LOGIN_USER = "LOGIN_USER";
 const LOGOUT_USER = "LOGOUT_USER";
@@ -10,7 +11,7 @@ const SET_CLOSET_ITEMS = "SET_CLOSET_ITEMS";
 
 const initialState: IReduxState = {
     token: "",
-    closetItemsWImages: []
+    closetItemsWImages: null
 };
 
 function rootReducer(state = initialState, action: any) {
@@ -22,7 +23,12 @@ function rootReducer(state = initialState, action: any) {
             return Object.assign({}, state, {token: ""});
 
         case ADD_CLOSET_ITEM: 
-            const newClosetItemsWImages = [...state.closetItemsWImages, action.payload.newItem];
+            var newClosetItemsWImages: IClosetItemWImages[];
+            if (state.closetItemsWImages === null) {
+                newClosetItemsWImages = [action.payload.newItem];
+            } else {
+                newClosetItemsWImages = [...state.closetItemsWImages, action.payload.newItem];
+            }
             return Object.assign({}, state, {closetItemsWImages: newClosetItemsWImages});
 
         case SET_CLOSET_ITEMS:
