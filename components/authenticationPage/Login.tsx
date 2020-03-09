@@ -12,7 +12,8 @@ import { ILoginInfo } from '../../interfaces/ILoginInfo';
 
 type LoginProps = {
     loginUser: Function,
-    navigation: any
+    navigation: any,
+    token: string
 }
 
 class Login extends Component<LoginProps> {

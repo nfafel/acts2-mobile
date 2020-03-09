@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { View, Modal, Text, SafeAreaView, TouchableOpacity, Image, Platform } from 'react-native';
 import { RNCamera } from 'react-native-camera';
-import {IImage} from '../../../interfaces/IImage';
+import {IImage} from '../../interfaces/IImage';
 import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIcons';  
 
 type CameraModalProps = {

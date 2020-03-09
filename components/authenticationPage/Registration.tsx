@@ -1,6 +1,6 @@
 import React from 'react';
 import {Component} from 'react';
-import { View, TouchableOpacity, SafeAreaView, Text, TextInput, KeyboardAvoidingView, Alert } from 'react-native';
+import { View, TouchableOpacity, Text, Alert } from 'react-native';
 import { Formik } from 'formik';
 import { Form, Item, Input, Label } from 'native-base';
 
@@ -11,8 +11,6 @@ import checkUsernameAvailability from '../../api/checkUsernameAvailability';
 import createUser from '../../api/createUser';
 import UniversitySelector from './UniversitySelector';
 import { IUser } from '../../interfaces/IUser';
-
-const jwtDecode = require('jwt-decode');
 
 type CreateAccountProps = {
     loginUser: Function,
@@ -111,11 +109,10 @@ class CreateAccount extends Component<CreateAccountProps> {
 const mapDispatchToProps = function(dispatch: any) {
     return {
         loginUser: (token: string) => {
-            const decoded = jwtDecode(token);
             dispatch( storeJWT({
-                token: token, 
+                token: token
             }))
-        },
+        }
     }
 }
   

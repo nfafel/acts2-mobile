@@ -7,7 +7,7 @@ import { connect } from 'react-redux';
 import FontAwesome5Icon from 'react-native-vector-icons/FontAwesome5';  
 import {vw, vh} from '../../css/viewportUnits';
 import { IClosetItemWImages } from '../../interfaces/IClosetItemWImages';
-import getUserClosetItems from '../../api/getUserClosetItems';
+import getClosetItemsByUser from '../../api/getClosetItemsByUser';
 import {setClosetItems} from '../../redux/actions';
 
 const jwtDecode = require('jwt-decode');
@@ -24,7 +24,7 @@ class Closet extends Component<ClosetProps> {
     async componentDidMount() {
         try {
             const decoded = jwtDecode(this.props.token);
-            const closetItems: IClosetItemWImages[] = await getUserClosetItems(decoded.payload.username);
+            const closetItems: IClosetItemWImages[] = await getClosetItemsByUser(decoded.payload.username);
             this.props.initClosetItemsWImages(closetItems);
         } catch(err) {
             console.log(err);
@@ -84,7 +84,7 @@ class Closet extends Component<ClosetProps> {
             );
         } else {
             closetBody = (
-                <View>
+                <View style={{flex: 1}}>
                     <View>
                         <TouchableOpacity 
                             onPress={() => this.props.navigation.navigate("AddItem")} 

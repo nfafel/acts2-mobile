@@ -1,6 +1,10 @@
-import React, {useState} from 'react';
-import { View, Text, StyleSheet, SafeAreaView, TouchableOpacity, KeyboardAvoidingView, TextInput, ScrollView, Image, Alert} from 'react-native';
-import { Header, Left, Right, Title, Body } from 'native-base';
+import React from 'react';
+import {Component} from 'react';
+import { ScrollView, View, Text, TouchableOpacity, KeyboardAvoidingView, TextInput, Image, Modal, SafeAreaView, StyleSheet, Alert } from 'react-native';
+import { Left, Body, Right, Header, Title } from 'native-base';
+import {vh, vw} from '../../../css/viewportUnits';
+import { IClosetItemWImages } from '../../../interfaces/IClosetItemWImages';
+import itemValidationSchema from '../../../validationSchemas/itemValidationSchema';
 import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIcons';  
 import PublicitySelector from '../../itemFormComponents/PublicitySelector';
 import GenderSelector from '../../itemFormComponents/GenderSelector';
@@ -8,85 +12,84 @@ import PhotoSelector from '../../itemFormComponents/PhotoSelector';
 import QualitySelector from '../../itemFormComponents/QualitySelector';
 import ClothingTypeSelector from '../../itemFormComponents/ClothingTypeSelector';
 import { Formik } from 'formik';
-import {vw, vh} from '../../../css/viewportUnits';
-import itemValidationSchema from '../../../validationSchemas/itemValidationSchema';
-import { IClothingType } from '../../../interfaces/IClothingType';
-import uploadClosetItem from '../../../api/uploadClosetItem';
-import { IClosetItem } from '../../../interfaces/IClosetItem';
-import { addClosetItem } from '../../../redux/actions';
-import { connect } from 'react-redux';
-import { IClosetItemWImages } from '../../../interfaces/IClosetItemWImages';
-import { INewClosetItem } from '../../../interfaces/INewClosetItem';
-const jwtDecode = require('jwt-decode');
+import {IClothingType} from '../../../interfaces/IClothingType';
 
-type AddNewItemProps = {
-    navigation: any,
-    token: string,
-    addItem: Function
+type ItemProps = {
+    closetItemWImages: IClosetItemWImages,
+    modalVisible: boolean,
+    closeModal: Function
 }
 
-const AddNewItem: React.FC<AddNewItemProps> = ({ navigation, token, addItem }) => {
-    const handleSubmit = async(values: any) => {
+class Item extends Component<ItemProps> {
+
+    handleSubmit = async(values: any) => {
         try {
-            const decoded = jwtDecode(token);
-            const newClosetItemData: INewClosetItem = {
-                username: decoded.payload.username,
-                universityId: decoded.payload.universityId,
-                images: values.images,
-                publicity: values.publicity,
-                gender: values.gender,
-                quality: values.quality,
-                brand: values.brand,
-                size: values.size,
-                value: values.value,
-                clothingType: values.clothingType.name
-            };
-            const newClosetItem: IClosetItem = await uploadClosetItem(newClosetItemData);
-            const newClosetItemWImages: IClosetItemWImages = {
-                closetItem: newClosetItem,
-                images: values.images.map((image: any) => image.base64)
-            }
-            addItem(newClosetItemWImages);
-            navigation.navigate("MainTabNav");
+            this.props.closeModal();
+            // const decoded = jwtDecode(token);
+            // const newClosetItemData: INewClosetItem = {
+            //     username: decoded.payload.username,
+            //     universityId: decoded.payload.universityId,
+            //     images: values.images,
+            //     publicity: values.publicity,
+            //     gender: values.gender,
+            //     quality: values.quality,
+            //     brand: values.brand,
+            //     size: values.size,
+            //     value: values.value,
+            //     clothingType: values.clothingType.name
+            // };
+            // const newClosetItem: IClosetItem = await uploadClosetItem(newClosetItemData);
+            // const newClosetItemWImages: IClosetItemWImages = {
+            //     closetItem: newClosetItem,
+            //     images: values.images.map((image: any) => image.base64)
+            // }
+            // addItem(newClosetItemWImages);
+            // navigation.navigate("MainTabNav");
         } catch(err) {
             console.log(err);
             Alert.alert("An error occured in adding the item. Please check internet connections and retry")
         }
     }
 
-    const initClothingType: IClothingType = {
+    initClothingType = {
         image: require('../../../assets/select.png'),
-        name: "Select"
+        name: this.props.closetItemWImages.closetItem.clothingType
     }
-    // upload() {
-    //     uploadImage(this.state.closetItems[0].node.image);
-    // }
 
-    // async get() {
-    //     const result = await getImage("1582490074004");
-    //     this.setState({image: result.image});
-    // }
+    initialValues = { 
+        images: this.props.closetItemWImages.images, 
+        publicity: this.props.closetItemWImages.closetItem.publicity, 
+        gender: this.props.closetItemWImages.closetItem.gender, 
+        brand: this.props.closetItemWImages.closetItem.brand, 
+        size: this.props.closetItemWImages.closetItem.size, 
+        value: this.props.closetItemWImages.closetItem.value, 
+        quality: this.props.closetItemWImages.closetItem.quality, 
+        clothingType: this.initClothingType
+    }
 
-    return (
-        <View style={{backgroundColor: "white", flex: 1}}>
-            <Header style={{backgroundColor: "white"}}>
-                <Left style={{flex: 0.5}} />
-                <Body>
-                    <Title style={styles.title}>Add to Closet</Title>
-                </Body>
-                <Right style={{flex: 0.5}}>
-                    <TouchableOpacity onPress={() => navigation.navigate("Closet")}>
-                        <Text style={{color: "#f5737f", fontSize: 16*vh, fontFamily: "marker felt"}}>Cancel</Text>
-                    </TouchableOpacity>
-                </Right>
-            </Header>
-
-            <SafeAreaView/>
-                <Formik
-                    initialValues = {{ images: [], publicity: "market", gender: "female", brand: "", size: "", value: "", quality: 0, clothingType: initClothingType}}
-                    validationSchema={itemValidationSchema}
-                    onSubmit = {(values) => handleSubmit(values)}
-                >
+    render() {
+        return (
+            <Modal 
+                visible={this.props.modalVisible}
+                animationType="slide"
+            >
+                <Header style={{backgroundColor: "white"}}>
+                    <Left style={{flex: 0.5}} />
+                    <Body>
+                        <Title style={styles.title}>Edit Item</Title>
+                    </Body>
+                    <Right style={{flex: 0.5}}>
+                        <TouchableOpacity onPress={() => this.props.closeModal()}>
+                            <Text style={{color: "#f5737f", fontSize: 16*vh, fontFamily: "marker felt"}}>Cancel</Text>
+                        </TouchableOpacity>
+                    </Right>
+                </Header>
+                <SafeAreaView style={{flex: 1}}>
+                    <Formik
+                        initialValues = {this.initialValues}
+                        validationSchema={itemValidationSchema}
+                        onSubmit = {(values) => this.handleSubmit(values)}
+                    >
                     {({values, handleSubmit, handleChange, setFieldValue}) => 
                         <ScrollView>
                             <PublicitySelector publicity={values.publicity} setPublicity={handleChange("publicity")} />
@@ -138,38 +141,32 @@ const AddNewItem: React.FC<AddNewItemProps> = ({ navigation, token, addItem }) =
 
                             <PhotoSelector setFieldValue={setFieldValue} images={values.images} />
 
-                            <TouchableOpacity onPress={handleSubmit} style={{margin: 20}} >
-                                <View style={{flexDirection: "row", justifyContent: "center", borderColor: "black", borderBottomWidth: 3, borderRightWidth: 3, borderTopWidth: 1, borderLeftWidth: 1, borderRadius: 2}}>
-                                    <Text style={{fontSize: 25, padding: 5}}>
-                                        Add to My Closet
-                                    </Text>
-                                </View>
-                            </TouchableOpacity>
+                            <View style={{flexDirection:"row", justifyContent: "center"}}>
+                                <TouchableOpacity onPress={() => Alert.alert("delete")} style={{ marginHorizontal: 20}} >
+                                    <View style={{flexDirection: "row", justifyContent: "center", borderColor: "black", borderBottomWidth: 3, borderRightWidth: 3, borderTopWidth: 1, borderLeftWidth: 1, borderRadius: 2}}>
+                                        <Text style={{fontSize: 25, padding: 5, color: "red"}}>
+                                            Delete
+                                        </Text>
+                                    </View>
+                                </TouchableOpacity>
+                                <TouchableOpacity onPress={handleSubmit} style={{}} >
+                                    <View style={{flexDirection: "row", justifyContent: "center", borderColor: "black", borderBottomWidth: 3, borderRightWidth: 3, borderTopWidth: 1, borderLeftWidth: 1, borderRadius: 2}}>
+                                        <Text style={{fontSize: 25, padding: 5}}>
+                                            Update
+                                        </Text>
+                                    </View>
+                                </TouchableOpacity>
+                            </View>
                         </ScrollView>
                     }
-                </Formik>
-            <SafeAreaView/>
-        </View>
-    )
-}
-
-const mapDispatchToProps = function(dispatch: any) {
-    return {
-        addItem: (closetItem: IClosetItemWImages) => {
-            dispatch( addClosetItem({
-                newItem: closetItem, 
-            }))
-        },
+                    </Formik>
+                </SafeAreaView>
+            </Modal>
+        )
     }
 }
 
-const mapStateToProps = function(state: any) {
-    return {
-        token: state.token,
-    }
-}
-  
-export default connect(mapStateToProps, mapDispatchToProps)(AddNewItem);
+export default Item;
 
 const styles = StyleSheet.create({
     title: {

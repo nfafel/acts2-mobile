@@ -1,13 +1,13 @@
 import React from 'react';
 import {Component} from 'react';
-import { View, Text, SafeAreaView, TextInput, ScrollView, TouchableOpacity } from 'react-native';
+import { View, Text, SafeAreaView, TextInput, ScrollView, TouchableOpacity, Alert } from 'react-native';
 import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIcons';  
 import { IClosetItemWImages } from '../../interfaces/IClosetItemWImages';
 import Item from '../Item';
 import { Spinner } from 'native-base';
 import { connect } from 'react-redux';
 import {vh, vw} from '../../css/viewportUnits';
-import getUniversityClosetItems from '../../api/getUniversityClosetItems';
+import getClosetItemsByUniversity from '../../api/getClosetItemsByUniversity';
 const jwtDecode = require('jwt-decode');
 
 type MarketProps = {
@@ -29,7 +29,7 @@ class Market extends Component<MarketProps, MarketState> {
     async componentDidMount() {
         try {
             const decoded = jwtDecode(this.props.token);
-            const marketClosetItems: IClosetItemWImages[] = await getUniversityClosetItems(decoded.payload.universityId);
+            const marketClosetItems: IClosetItemWImages[] = await getClosetItemsByUniversity(decoded.payload.universityId);
             this.setState({closetItemsWImages: marketClosetItems})
         } catch(err) {
             console.log(err);

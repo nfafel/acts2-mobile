@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, TouchableOpacity, Image } from 'react-native';
 import FontAwesome5Icon from 'react-native-vector-icons/FontAwesome5';  
-import {vw, vh} from '../../../css/viewportUnits';
+import {vw, vh} from '../../css/viewportUnits';
 
 type QualitySelectorProps = {
     quality: number,
@@ -50,7 +50,7 @@ const QualitySelector: React.FC<QualitySelectorProps> = ({quality, setQuality}) 
                     </TouchableOpacity>
                 )}
             </View>
-            <Text style={{fontSize: 12*vh}} >{getQualityLabel()}</Text>
+            <Text style={{fontSize: 14*vh}} >{getQualityLabel()}</Text>
         </View>
     )
 }

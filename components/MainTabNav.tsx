@@ -15,7 +15,7 @@ const MainTabNav: React.FC = () => {
         <Tab.Navigator
             initialRouteName="Closet"
             activeColor="black"
-            barStyle={{backgroundColor: "#c4c4c4"}}
+            barStyle={{backgroundColor: "white"}}
             labeled={false}
         >
             <Tab.Screen

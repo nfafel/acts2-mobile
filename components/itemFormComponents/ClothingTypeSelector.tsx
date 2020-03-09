@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import { View, Modal, Text, SafeAreaView, TouchableOpacity, Image } from 'react-native';
-import { IClothingType } from '../../../interfaces/IClothingType';
+import { IClothingType } from '../../interfaces/IClothingType';
 import { Header, Left, Right, Title } from 'native-base';
 import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIcons';  
-import {vh, vw} from '../../../css/viewportUnits';
+import {vh, vw} from '../../css/viewportUnits';
 
 type ClothingTypeSelectorProps = {
     submitType: Function,
@@ -24,27 +24,27 @@ class ClothingTypeSelector extends Component<ClothingTypeSelectorProps, Clothing
 
     typesSources: IClothingType[][] = [
         [
-            {image: require("../../../assets/buttondown.png"), name: "Button Downs"}, 
-            {image: require("../../../assets/croptop.png"), name: "Crop Tops"}, 
-            {image: require("../../../assets/dress.png"), name: "Dresses"}, 
-            {image: require("../../../assets/jeans.png"), name: "Pants"},  
-            {image: require("../../../assets/jewelry.png"), name: "Jewelry"},  
-            {image: require("../../../assets/leggings.png"), name: "Leggings"}
+            {image: require("../../assets/buttondown.png"), name: "Button Downs"}, 
+            {image: require("../../assets/croptop.png"), name: "Crop Tops"}, 
+            {image: require("../../assets/dress.png"), name: "Dresses"}, 
+            {image: require("../../assets/jeans.png"), name: "Pants"},  
+            {image: require("../../assets/jewelry.png"), name: "Jewelry"},  
+            {image: require("../../assets/leggings.png"), name: "Leggings"}
         ],  
         [
-            {image: require("../../../assets/longsleeve.png"), name: "Long Sleeves"},  
-            {image: require("../../../assets/menformal.png"), name: "Men Formal Wear"},  
-            {image: require("../../../assets/party.png"), name: "Party Clothes"},  //Maybe don't support
-            {image: require("../../../assets/shoes.png"), name: "Shoes"},  
-            {image: require("../../../assets/shorts.png"), name: "Shorts"},  
-            {image: require("../../../assets/skirt.png"), name: "Skirts"}, 
+            {image: require("../../assets/longsleeve.png"), name: "Long Sleeves"},  
+            {image: require("../../assets/menformal.png"), name: "Men Formal Wear"},  
+            {image: require("../../assets/party.png"), name: "Party Clothes"},  //Maybe don't support
+            {image: require("../../assets/shoes.png"), name: "Shoes"},  
+            {image: require("../../assets/shorts.png"), name: "Shorts"},  
+            {image: require("../../assets/skirt.png"), name: "Skirts"}, 
         ],
         [ 
-            {image: require("../../../assets/sweater.png"), name: "Sweaters"},  
-            {image: require("../../../assets/sweatpants.png"), name: "Sweat Pants"},  
-            {image: require("../../../assets/sweatshirt.png"), name: "Sweatshirts"}, 
-            {image: require("../../../assets/tanktop.png"), name: "Tank Tops"},  
-            {image: require("../../../assets/tshirt.png"), name: "TShirts"}
+            {image: require("../../assets/sweater.png"), name: "Sweaters"},  
+            {image: require("../../assets/sweatpants.png"), name: "Sweat Pants"},  
+            {image: require("../../assets/sweatshirt.png"), name: "Sweatshirts"}, 
+            {image: require("../../assets/tanktop.png"), name: "Tank Tops"},  
+            {image: require("../../assets/tshirt.png"), name: "TShirts"}
         ]
     ]
 

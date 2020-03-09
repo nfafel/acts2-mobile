@@ -1,13 +1,13 @@
 import React, {Component, useState} from 'react';
 import { View, Text, TouchableOpacity, Image, StyleSheet, ScrollView } from 'react-native';
 import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIcons';  
-import { IImage } from '../../../interfaces/IImage';
-import {vw, vh} from '../../../css/viewportUnits';
+import { IImage } from '../../interfaces/IImage';
+import {vw, vh} from '../../css/viewportUnits';
 import { FieldArray } from 'formik';
 import CameraModal from './CameraModal';
 
 type PhotoSelectorProps = {
-    values: any,
+    images: any,
     setFieldValue: Function
 }
 
@@ -16,14 +16,14 @@ const PhotoSelector: React.FC<PhotoSelectorProps> = (props) => {
 
     return (
         <View style={{margin: 20}}>
-            <Text style={{fontSize: 18, fontFamily: "marker felt"}}>Photos:</Text>
+            <Text style={{fontSize: 16*vh, fontFamily: "marker felt"}}>Photos:</Text>
             <View style={{flexDirection: "row", marginTop: 8, alignItems: "center"}}>
                 <FieldArray
                     name="images"
                     render={arrayHelpers => (
                         <View style={{maxWidth: "70%"}}>
                             <ScrollView horizontal>
-                                {props.values.images.map((image: IImage, index: any) => (
+                                {props.images.map((image: IImage, index: any) => (
                                     <TouchableOpacity 
                                         onPress={() => {
                                             arrayHelpers.remove(index)
@@ -31,7 +31,7 @@ const PhotoSelector: React.FC<PhotoSelectorProps> = (props) => {
                                         key={index} 
                                         style={{marginRight: 10}}
                                     >
-                                        <Image source={{uri: image.uri}} style={{width: 100, height: 100}} />
+                                        <Image source={{uri: `data:image/png;base64,${image.base64}`}} style={{width: 75*vh, height: 75*vh}} /> 
                                     </TouchableOpacity>
                                 ))}
                             </ScrollView>
@@ -40,14 +40,14 @@ const PhotoSelector: React.FC<PhotoSelectorProps> = (props) => {
                 />
                 <TouchableOpacity
                     onPress={() => setCameraOpen(true)}
-                    style={{borderWidth: 1, height: 60*vh, width: 90*vw, borderRadius: 15, padding: 5, marginLeft: 10}}
+                    style={{borderWidth: 1, borderRadius: 15, marginLeft: 10 }}
                 >
-                    <MaterialCommunityIcon name="camera" size={80} color="#96beeb" />
-                    <CameraModal 
-                        open={cameraOpen} 
+                    <MaterialCommunityIcon name="camera" size={60*vh} color="#96beeb" style={{height: 59*vh}} />
+                    <CameraModal
+                        open={cameraOpen}
                         closeCamera={() => setCameraOpen(false)}
                         submitPicture={(newImage: IImage) => {
-                            props.setFieldValue("images", [...props.values.images, newImage], true)
+                            props.setFieldValue("images", [...props.images, newImage], true)
                         }}
                     />
                 </TouchableOpacity>
@@ -57,12 +57,3 @@ const PhotoSelector: React.FC<PhotoSelectorProps> = (props) => {
 }
 
 export default PhotoSelector;
-
-const styles = StyleSheet.create({
-    mainView: {
-        flexDirection: "row", 
-        marginHorizontal: 30*vw, 
-        marginTop: 10*vh,
-        height: 30*vh
-    }
-});

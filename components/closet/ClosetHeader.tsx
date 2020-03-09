@@ -50,7 +50,7 @@ class ClosetHeader extends Component<ClosetHeaderProps, ClosetHeaderState> {
                     <MenuTrigger>
                         <MaterialCommunityIcon name="dots-vertical" size={35} />
                     </MenuTrigger>
-                    <MenuOptions>
+                    <MenuOptions >
                         <MenuOption onSelect={() => Alert.alert("update")} text='Edit Profile' />
                         <MenuOption onSelect={() => this.handleLogout()} ><Text style={{color: "red"}}>Sign Out</Text></MenuOption>
                     </MenuOptions>
@@ -78,7 +78,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(ClosetHeader);
 
 const styles = StyleSheet.create({
     mainView: {
-        backgroundColor: "#e8e8e8", 
+        backgroundColor: "#f5f5f5", 
         position: "relative", 
         height: 65*vh
     }

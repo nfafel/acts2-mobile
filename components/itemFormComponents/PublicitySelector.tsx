@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import { View, Text, TouchableOpacity, Image, StyleSheet } from 'react-native';
-import {vw, vh} from '../../../css/viewportUnits';
+import {vw, vh} from '../../css/viewportUnits';
 
 type PublicitySelectorProps = {
     publicity: string,
@@ -30,10 +30,10 @@ const PublicitySelector: React.FC<PublicitySelectorProps> = ({publicity, setPubl
                 <Text style={{fontSize: 16*vh, alignSelf: "center", fontFamily: "Trebuchet MS"}}>Free</Text>
             </TouchableOpacity>
             <TouchableOpacity
-                style={{borderColor: "black", borderWidth: 2, borderLeftWidth: 0, borderBottomWidth: 4, borderRightWidth: 5, flex: 1, justifyContent: "center", backgroundColor: getButtonColor("private")}}
-                onPress={() => setPublicity('private')}
+                style={{borderColor: "black", borderWidth: 2, borderLeftWidth: 0, borderBottomWidth: 4, borderRightWidth: 5, flex: 1, justifyContent: "center", backgroundColor: getButtonColor("hidden")}}
+                onPress={() => setPublicity('hidden')}
             >
-                <Text style={{fontSize: 16*vh, alignSelf: "center", fontFamily: "Trebuchet MS"}}>Private</Text>
+                <Text style={{fontSize: 16*vh, alignSelf: "center", fontFamily: "Trebuchet MS"}}>Hidden</Text>
             </TouchableOpacity>
         </View>
     )
