@@ -1,8 +1,10 @@
 import React from 'react';
 import {Component} from 'react';
-import { View, Text, KeyboardAvoidingView, TouchableOpacity } from 'react-native';
+import { View, KeyboardAvoidingView, TouchableOpacity } from 'react-native';
+import { Button, Text, TextInput } from 'react-native-paper';
+
 import { IUniversity } from '../../interfaces/IUniversity';
-import UniversitySelectorModal from '../universitySelector/UniversitySelectorModal';
+import UniversitySelectorModal from './UniversitySelectorModal';
 
 type UniversitySelectorProps = {
     setFieldValue: Function,
@@ -38,15 +40,10 @@ class UniversitySelector extends Component<UniversitySelectorProps, UniversitySe
 
     render() {
         return (
-            <KeyboardAvoidingView>
-                <View style={{flexDirection: "row"}}>
-                    <View style={{borderWidth: 0.5, borderRadius: 3, backgroundColor: "#f7f7f7", height: 50, justifyContent: "center", flex: 1, marginRight: 10}}>
-                        <Text style={{margin: 5}}>{this.state.selectedUniversityName || "No University Selected"}</Text>
-                    </View>
-                    <TouchableOpacity onPress={() => this.setState({selectorModalOpen: true})} style={{borderWidth: 0.5, borderColor: "blue", borderRadius: 3, backgroundColor: "#6efae7", height: 50, justifyContent: "center"}}>
-                        <Text style={{margin: 5}}>Select University</Text>
-                    </TouchableOpacity>
-                </View>
+            <View>
+                <Button mode='text' onPress={() => this.setState({selectorModalOpen: true})}>
+                    {this.state.selectedUniversityName || "Select University"}
+                </Button>
                 <UniversitySelectorModal 
                     visible={this.state.selectorModalOpen} 
                     closeModal={()=> this.setState({selectorModalOpen: false})} 
@@ -55,7 +52,7 @@ class UniversitySelector extends Component<UniversitySelectorProps, UniversitySe
                 {(this.props.errors.universityId && this.props.touched.universityId) &&
                     <Text style={{color: 'red'}}>{this.props.errors.universityId}</Text>
                 }
-            </KeyboardAvoidingView>
+            </View>
         )
     }
 }

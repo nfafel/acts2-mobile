@@ -4,7 +4,7 @@ import { View, Text, SafeAreaView, TextInput, ScrollView, TouchableOpacity, Aler
 import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIcons';  
 import { IClosetItemWImages } from '../../interfaces/IClosetItemWImages';
 import Item from '../Item';
-import { Spinner } from 'native-base';
+import { ActivityIndicator } from 'react-native-paper';
 import { connect } from 'react-redux';
 import {vh, vw} from '../../css/viewportUnits';
 import getClosetItemsByUniversity from '../../api/getClosetItemsByUniversity';
@@ -40,7 +40,7 @@ class Market extends Component<MarketProps, MarketState> {
         if (this.state.closetItemsWImages === null) {
             return (
                 <SafeAreaView>
-                    <Spinner />
+                    <ActivityIndicator />
                 </SafeAreaView>
             )
         }

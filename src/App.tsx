@@ -3,9 +3,10 @@ import {
   StatusBar
 } from 'react-native';
 
-import { Provider} from "react-redux";
+import { Provider as ReduxProvider} from "react-redux";
 import { PersistGate } from 'redux-persist/integration/react'
 import { MenuProvider } from 'react-native-popup-menu';
+import { Provider as PaperProvider } from 'react-native-paper';
 import { NavigationContainer } from '@react-navigation/native';
 
 import store, { persistor } from './redux/store'
@@ -14,16 +15,18 @@ import MainStack from './components/MainStack';
 
 const App: React.FC = () => {
   return (
-    <Provider store={store}>
+    <ReduxProvider store={store}>
       <PersistGate loading={null} persistor={persistor}>
-        <MenuProvider>
-          <NavigationContainer>
-            <StatusBar barStyle="dark-content" />
-            <MainStack />
-          </NavigationContainer>
-        </MenuProvider>
+        <PaperProvider>
+          <MenuProvider>
+            <NavigationContainer>
+              <StatusBar barStyle="dark-content" />
+              <MainStack />
+            </NavigationContainer>
+          </MenuProvider>
+        </PaperProvider>
       </PersistGate>
-    </Provider>
+    </ReduxProvider>
   );
 };
 

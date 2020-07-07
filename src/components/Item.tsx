@@ -1,7 +1,7 @@
 import React from 'react';
 import {Component} from 'react';
 import { View, Text, TouchableOpacity, Image } from 'react-native';
-import { Card, CardItem, Thumbnail, Left, Body, Right } from 'native-base';
+import { Card, Title, Paragraph } from 'react-native-paper';
 import EditItemModal from './closet/editItem/EditItemModal';
 import {vh, vw} from '../css/viewportUnits';
 import { IClosetItemWImages } from '../interfaces/IClosetItemWImages';
@@ -37,18 +37,15 @@ class Item extends Component<ItemProps, ItemState> {
             <View style={{marginHorizontal: 5*vw, flex: 1}}>
                 <TouchableOpacity onPress={() => this.setState({modalVisible: true})}>
                     <Card>
-                        <CardItem cardBody>
-                            <Image source={{uri: `data:image/png;base64,${this.props.closetItemWImages.images[0].base64}`}} style={{width: "100%", aspectRatio: 1, resizeMode: "stretch" }} />
-                        </CardItem>
-                        <CardItem>
-                            <Left>
+                        <Card.Cover source={{uri: `data:image/png;base64,${this.props.closetItemWImages.images[0].base64}`}} />
+                        <Card.Content>
+                            <Title>
                                 <Text>{this.props.closetItemWImages.closetItem.value}</Text>
-                            </Left>
-                            <Body style={{alignItems: "center"}}>
+                            </Title>
+                            <Paragraph style={{alignItems: "center"}}>
                                 <Text>{this.props.closetItemWImages.closetItem.publicity}</Text>
-                            </Body>
-                            <Right/>
-                        </CardItem>
+                            </Paragraph>
+                        </Card.Content>
                     </Card>
                 </TouchableOpacity>
                 <EditItemModal modalVisible={this.state.modalVisible} closeModal={() => this.setState({modalVisible: false})} closetItemWImages={this.props.closetItemWImages} />

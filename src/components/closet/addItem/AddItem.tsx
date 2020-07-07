@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import { View, Text, StyleSheet, SafeAreaView, TouchableOpacity, KeyboardAvoidingView, TextInput, ScrollView, Image, Alert} from 'react-native';
-import { Header, Left, Right, Title, Body } from 'native-base';
+import { Title, Appbar } from 'react-native-paper';
 import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIcons';  
 import PublicitySelector from '../../itemFormComponents/PublicitySelector';
 import GenderSelector from '../../itemFormComponents/GenderSelector';
@@ -70,17 +70,15 @@ const AddNewItem: React.FC<AddNewItemProps> = ({ navigation, token, addItem }) =
 
     return (
         <View style={{backgroundColor: "white", flex: 1}}>
-            <Header style={{backgroundColor: "white"}}>
-                <Left style={{flex: 0.5}} />
-                <Body>
-                    <Title style={styles.title}>Add to Closet</Title>
-                </Body>
-                <Right style={{flex: 0.5}}>
-                    <TouchableOpacity onPress={() => navigation.navigate("Closet")}>
-                        <Text style={{color: "#f5737f", fontSize: 16*vh, fontFamily: "marker felt"}}>Cancel</Text>
-                    </TouchableOpacity>
-                </Right>
-            </Header>
+            <Appbar.Header>
+                
+                <Title style={styles.title}>Add to Closet</Title>
+            
+                <TouchableOpacity onPress={() => navigation.navigate("Closet")}>
+                    <Text style={{color: "#f5737f", fontSize: 16*vh, fontFamily: "marker felt"}}>Cancel</Text>
+                </TouchableOpacity>
+                
+            </Appbar.Header>
 
             <SafeAreaView/>
                 <Formik

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { View, Modal, Text, SafeAreaView, TouchableOpacity, Image } from 'react-native';
 import { IClothingType } from '../../interfaces/IClothingType';
-import { Header, Left, Right, Title } from 'native-base';
+import { Appbar, Title } from 'react-native-paper';
 import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIcons';  
 import {vh, vw} from '../../css/viewportUnits';
 
@@ -61,15 +61,13 @@ class ClothingTypeSelector extends Component<ClothingTypeSelectorProps, Clothing
                     {this.props.clothingType.name !== "Select" && <Text style={{alignSelf: "center"}}>{this.props.clothingType.name}</Text>}
                 </TouchableOpacity>
                 <Modal visible={this.state.modalVisible} animationType="slide">
-                    <Header>
-                        <Left>
-                            <TouchableOpacity onPress={() => this.setState({modalVisible: false})}>
-                                <MaterialCommunityIcon name="arrow-left" size={28*vh} color="blue" />
-                            </TouchableOpacity>
-                        </Left>
+                    <Appbar.Header >
+                        <TouchableOpacity onPress={() => this.setState({modalVisible: false})}>
+                            <MaterialCommunityIcon name="arrow-left" size={28*vh} color="blue" />
+                        </TouchableOpacity>
                         <Title style={{alignSelf: "center"}}>Select Clothing Type</Title>
-                        <Right/>
-                    </Header>
+                    </Appbar.Header >
+
                     <SafeAreaView style={{flexDirection: "row", flex: 1, marginTop: 10*vh}}>
                         {this.typesSources.map((column, i) => 
                             <View style={{flex: 1}} key={i}>

@@ -1,7 +1,7 @@
 import React from 'react';
 import {Component} from 'react';
 import { ScrollView, View, Text, TouchableOpacity, KeyboardAvoidingView, TextInput, Image, Modal, SafeAreaView, StyleSheet, Alert } from 'react-native';
-import { Left, Body, Right, Header, Title } from 'native-base';
+import { Appbar, Title } from 'react-native-paper';
 import {vh, vw} from '../../../css/viewportUnits';
 import { IClosetItemWImages } from '../../../interfaces/IClosetItemWImages';
 import itemValidationSchema from '../../../validationSchemas/itemValidationSchema';
@@ -73,17 +73,14 @@ class Item extends Component<ItemProps> {
                 visible={this.props.modalVisible}
                 animationType="slide"
             >
-                <Header style={{backgroundColor: "white"}}>
-                    <Left style={{flex: 0.5}} />
-                    <Body>
-                        <Title style={styles.title}>Edit Item</Title>
-                    </Body>
-                    <Right style={{flex: 0.5}}>
-                        <TouchableOpacity onPress={() => this.props.closeModal()}>
-                            <Text style={{color: "#f5737f", fontSize: 16*vh, fontFamily: "marker felt"}}>Cancel</Text>
-                        </TouchableOpacity>
-                    </Right>
-                </Header>
+                <Appbar.Header >
+                    <Title style={styles.title}>Edit Item</Title>
+
+                    <TouchableOpacity onPress={() => this.props.closeModal()}>
+                        <Text style={{color: "#f5737f", fontSize: 16*vh, fontFamily: "marker felt"}}>Cancel</Text>
+                    </TouchableOpacity>
+                </Appbar.Header >
+
                 <SafeAreaView style={{flex: 1}}>
                     <Formik
                         initialValues = {this.initialValues}

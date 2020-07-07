@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import { View, Text, TouchableOpacity, SafeAreaView, ScrollView, Alert } from 'react-native';
-import { Spinner } from 'native-base';
+import { ActivityIndicator } from 'react-native-paper';
 import ClosetHeader from './ClosetHeader';
 import Item from '../Item';
 import { connect } from 'react-redux';
@@ -61,7 +61,7 @@ class Closet extends Component<ClosetProps> {
         if (this.props.closetItemsWImages === null) {
             closetBody = (
                 <View>
-                    <Spinner />
+                    <ActivityIndicator />
                 </View>
             );
         } else if (this.props.closetItemsWImages.length === 0) {

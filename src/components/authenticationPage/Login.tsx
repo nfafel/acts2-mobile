@@ -1,8 +1,8 @@
 import React from 'react';
 import {Component} from 'react';
-import { View, TouchableOpacity, Alert } from 'react-native';
+import { View, TouchableOpacity, Text, Alert } from 'react-native';
 import { Formik } from 'formik';
-import { Text, Form, Item, Input, Label } from 'native-base';
+import { TextInput } from 'react-native-paper';
 import {vh, vw} from '../../css/viewportUnits';
 import { storeJWT } from '../../redux/actions';
 import { connect } from 'react-redux';
@@ -52,31 +52,23 @@ class Login extends Component<LoginProps> {
                             <Text style={{fontSize: 40, margin: 7, textAlign: "center", fontWeight: "bold"}}>Act 2</Text>
                             <Text style={{fontSize: 25, margin: 7, textAlign: "center"}}>Welcome back!</Text>
                             <View style={{margin: 20*vw}}>
-                                <Form>
-                                    <Item floatingLabel >
-                                        <Label>Username</Label>
-                                        <Input 
-                                            onChangeText={handleChange('username')}
-                                            value={values.username}
-                                            style={{marginLeft: 5, fontSize: 20}}
-                                        />
-                                    </Item>
-                                    {(errors.username && touched.username) &&
-                                        <Text style={{color: 'red', marginLeft: 12}}>{errors.username}</Text>
-                                    }
-                                    <Item floatingLabel last>
-                                        <Label>Password</Label>
-                                        <Input 
-                                            onChangeText={handleChange('password')}
-                                            value={values.password}
-                                            secureTextEntry
-                                            style={{marginLeft: 5, fontSize: 20}}
-                                        />
-                                    </Item>
-                                    {(errors.password && touched.password) &&
-                                        <Text style={{color: 'red', marginLeft: 12}}>{errors.password}</Text>
-                                    }
-                                </Form>
+                                <TextInput
+                                    label='Username'
+                                    onChangeText={handleChange('username')}
+                                    value={values.username}
+                                />
+                                {(errors.username && touched.username) &&
+                                    <Text style={{color: 'red', marginLeft: 12}}>{errors.username}</Text>
+                                }
+                                <TextInput
+                                    label='Password'
+                                    onChangeText={handleChange('password')}
+                                    value={values.password}
+                                    secureTextEntry
+                                />
+                                {(errors.password && touched.password) &&
+                                    <Text style={{color: 'red', marginLeft: 12}}>{errors.password}</Text>
+                                }
                             </View>
                             
                             <View style={{marginHorizontal: 20, marginBottom: 10 }}>
