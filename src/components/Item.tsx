@@ -4,18 +4,18 @@ import { View, Text, TouchableOpacity, Image } from 'react-native';
 import { Card, Title, Paragraph } from 'react-native-paper';
 import EditItemModal from './closet/editItem/EditItemModal';
 import {vh, vw} from '../css/viewportUnits';
-import { IClosetItemWImages } from '../interfaces/IClosetItemWImages';
+import { IClosetItem } from '../interfaces';
 
-type ItemProps = {
-    closetItemWImages: IClosetItemWImages,
+interface IItemProps {
+    closetItem: IClosetItem,
 }
 
-type ItemState = {
+interface IItemState {
     modalVisible: boolean
 }
 
-class Item extends Component<ItemProps, ItemState> {
-    constructor(props: ItemProps) {
+class Item extends Component<IItemProps, IItemState> {
+    constructor(props: IItemProps) {
         super(props);
         this.state = {
             modalVisible: false
@@ -37,18 +37,15 @@ class Item extends Component<ItemProps, ItemState> {
             <View style={{marginHorizontal: 5*vw, flex: 1}}>
                 <TouchableOpacity onPress={() => this.setState({modalVisible: true})}>
                     <Card>
-                        <Card.Cover source={{uri: `data:image/png;base64,${this.props.closetItemWImages.images[0].base64}`}} />
+                        <Card.Cover source={{uri: this.props.closetItem.images[0].url}} />
                         <Card.Content>
                             <Title>
-                                <Text>{this.props.closetItemWImages.closetItem.value}</Text>
+                                <Text>{this.props.closetItem.value}</Text>
                             </Title>
-                            <Paragraph style={{alignItems: "center"}}>
-                                <Text>{this.props.closetItemWImages.closetItem.publicity}</Text>
-                            </Paragraph>
                         </Card.Content>
                     </Card>
                 </TouchableOpacity>
-                <EditItemModal modalVisible={this.state.modalVisible} closeModal={() => this.setState({modalVisible: false})} closetItemWImages={this.props.closetItemWImages} />
+                <EditItemModal modalVisible={this.state.modalVisible} closeModal={() => this.setState({modalVisible: false})} closetItem={this.props.closetItem} />
             </View>
         )
     }

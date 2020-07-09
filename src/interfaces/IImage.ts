@@ -1,4 +1,4 @@
 export interface IImage {
-    uri: string;
-    base64: string;
+    key: string;
+    url: string;
 }

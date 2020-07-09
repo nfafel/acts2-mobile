@@ -1,6 +1,6 @@
-import {IClosetItem} from './IClosetItem';
+import { IUser } from ".";
 
 export interface IReduxState {
     token: string;
-    closetItemsWImages: IClosetItem[] | null;
+    user: IUser | null;
 }

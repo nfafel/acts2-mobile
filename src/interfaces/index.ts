@@ -1,0 +1,10 @@
+export { IClosetItem } from './IClosetItem';
+export { IClothingType } from './IClothingType';
+export { IImage } from './IImage';
+export { ILoginInfo } from './ILoginInfo';
+export { INewClosetItem } from './INewClosetItem';
+export { IReduxState } from './IReduxState';
+export { IUniversity } from './IUniversity';
+export { IUser } from './IUser';
+export { INewUser } from './INewUser';
+export { IUserWToken } from './IUserWToken';

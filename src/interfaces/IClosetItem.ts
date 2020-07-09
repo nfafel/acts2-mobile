@@ -1,9 +1,11 @@
+import { IImage } from ".";
+
 export interface IClosetItem {
     id: string;
     userId: string;
     username: string;
     universityId: string;
-    images: string[]; //Change to IImage[]
+    images: IImage[];
     gender: string;
     quality: number;
     brand: string;

@@ -1,31 +1,41 @@
 import React, {Component} from 'react';
 import { View, Text, TouchableOpacity, SafeAreaView, ScrollView, Alert } from 'react-native';
 import { ActivityIndicator } from 'react-native-paper';
+import { connect } from 'react-redux';
+
 import ClosetHeader from './ClosetHeader';
 import Item from '../Item';
-import { connect } from 'react-redux';
 import FontAwesome5Icon from 'react-native-vector-icons/FontAwesome5';  
 import {vw, vh} from '../../css/viewportUnits';
-import { IClosetItemWImages } from '../../interfaces/IClosetItemWImages';
 import getClosetItemsByUser from '../../api/getClosetItemsByUser';
-import {setClosetItems} from '../../redux/actions';
+import { IClosetItem, IUser, IReduxState } from '../../interfaces';
 
-const jwtDecode = require('jwt-decode');
-
-type ClosetProps = {
-    navigation: any,
-    closetItemsWImages: IClosetItemWImages[] | null,
-    initClosetItemsWImages: Function,
-    token: string
+interface IClosetProps {
+    navigation: any;
+    user: IUser | null;
 }
 
-class Closet extends Component<ClosetProps> {
-    
+interface IClosetState {
+    closetItems: IClosetItem[] | undefined;
+}
+
+class Closet extends Component<IClosetProps, IClosetState> {
+    constructor(props: IClosetProps) {
+        super(props);
+        this.state = {
+            closetItems: undefined,
+        }
+    }
+
     async componentDidMount() {
+        if (!this.props.user) {
+            Alert.alert("An error occured. Please log out and log back in");
+            return;
+        }
+
         try {
-            const decoded = jwtDecode(this.props.token);
-            const closetItems: IClosetItemWImages[] = await getClosetItemsByUser(decoded.payload.username);
-            this.props.initClosetItemsWImages(closetItems);
+            const closetItems: IClosetItem[] = await getClosetItemsByUser(this.props.user.id);
+            this.setState({closetItems: closetItems});
         } catch(err) {
             console.log(err);
             Alert.alert("An error occured. Please log out and log back in")
@@ -33,14 +43,14 @@ class Closet extends Component<ClosetProps> {
     }
 
     getClosetItems() {
-        let closetView: JSX.Element[] = [];
-        if (this.props.closetItemsWImages !== null) {
-            for (var i=0; i<this.props.closetItemsWImages.length; i+=2) {
+        const closetView = [];
+        if (this.state.closetItems) {
+            for (var i=0; i<this.state.closetItems.length; i+=2) {
                 closetView.push(
                     <View key={i} style={{flexDirection: "row"}}>
-                        <Item closetItemWImages={this.props.closetItemsWImages[i]} /> 
-                        {(i+1 < this.props.closetItemsWImages.length) ? 
-                            <Item closetItemWImages={this.props.closetItemsWImages[i+1]} /> 
+                        <Item closetItem={this.state.closetItems[i]} /> 
+                        {(i+1 < this.state.closetItems.length) ? 
+                            <Item closetItem={this.state.closetItems[i+1]} /> 
                         :
                             <View style={{flex:1, margin: 5*vw}}></View>
                         }
@@ -56,15 +66,13 @@ class Closet extends Component<ClosetProps> {
         )
     }
 
-    render() {
-        var closetBody: JSX.Element;
-        if (this.props.closetItemsWImages === null) {
+    render() {        
+        let closetBody;
+        if (!this.state.closetItems) {
             closetBody = (
-                <View>
-                    <ActivityIndicator />
-                </View>
+                <ActivityIndicator />
             );
-        } else if (this.props.closetItemsWImages.length === 0) {
+        } else if (this.state.closetItems.length === 0) {
             closetBody = (
                 <View style={{margin: 20}}>
                     <Text style={{fontSize: 30, fontFamily: "marker felt"}}>
@@ -112,19 +120,10 @@ class Closet extends Component<ClosetProps> {
     }
 }
 
-const mapStateToProps = function(state: any) {
+const mapStateToProps = function(state: IReduxState) {
     return {
-        closetItemsWImages: state.closetItemsWImages,
-        token: state.token
+        user: state.user,
     }
 }
-
-const mapDispatchToProps = function(dispatch: any) {
-    return {
-        initClosetItemsWImages: (closetItemsWImages: IClosetItemWImages[]) => {
-            dispatch(setClosetItems({closetItemsWImages: closetItemsWImages}))
-        },
-    }
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(Closet);
+  
+export default connect(mapStateToProps)(Closet);

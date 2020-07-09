@@ -4,14 +4,18 @@ import { View, TouchableOpacity, Text, Alert } from 'react-native';
 import { Formik } from 'formik';
 import { TextInput } from 'react-native-paper';
 import {vh, vw} from '../../css/viewportUnits';
-import { storeJWT } from '../../redux/actions';
+import { storeUser } from '../../redux/actions';
 import { connect } from 'react-redux';
 import loginValidationSchema from '../../validationSchemas/loginValidationSchema';
 import loginUser from '../../api/loginUser';
 import { ILoginInfo } from '../../interfaces/ILoginInfo';
+import { IUser } from '../../interfaces';
+import getUser from '../../api/getUser';
+
+const jwtDecode = require('jwt-decode');
 
 type LoginProps = {
-    loginUser: Function,
+    loginUserRedux: Function,
     navigation: any,
     token: string
 }
@@ -21,8 +25,10 @@ class Login extends Component<LoginProps> {
     async attemptLogin(values: ILoginInfo) {
         try {
             const token: string = await loginUser(values);
-            if (token) {
-                this.props.loginUser(token); //Storing token in redux
+            const decoded = await jwtDecode(token);
+            const user = await getUser(decoded.payload.userId);
+            if (token && user) {
+                this.props.loginUserRedux(token, user);
                 this.props.navigation.navigate("AuthenticatedStack");
             }
         } catch(err) {
@@ -92,9 +98,10 @@ class Login extends Component<LoginProps> {
 
 const mapDispatchToProps = function(dispatch: any) {
     return {
-        loginUser: (token: string) => {
-            dispatch( storeJWT({
-                token: token, 
+        loginUserRedux: (token: string, user: IUser) => {
+            dispatch( storeUser({
+                token: token,
+                user: user,
             }))
         },
     }

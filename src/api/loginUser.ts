@@ -6,7 +6,7 @@ const loginUser = async(values: ILoginInfo) => {
     const host: string = Platform.OS === "ios" ? "localhost" : "10.0.2.2";
     const URL: string = process.env.URL || `http://${host}:8000`;
 
-    const userResponse = await fetch(`${URL}/user/login`, {
+    const userResponse = await fetch(`${URL}/authorization/`, {
         method: "POST",
         headers: {
             'Accept': 'application/json',
@@ -20,8 +20,8 @@ const loginUser = async(values: ILoginInfo) => {
     const body = await userResponse.json();
 
     if (userResponse.status !== 200) {
-        var error: any = new Error(body.message);
-        error.statusCode = userResponse.status;
+        const error: any = new Error(body.message);
+        error.status = userResponse.status;
         throw error;
     }
 

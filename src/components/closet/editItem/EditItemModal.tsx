@@ -3,7 +3,6 @@ import {Component} from 'react';
 import { ScrollView, View, Text, TouchableOpacity, KeyboardAvoidingView, TextInput, Image, Modal, SafeAreaView, StyleSheet, Alert } from 'react-native';
 import { Appbar, Title } from 'react-native-paper';
 import {vh, vw} from '../../../css/viewportUnits';
-import { IClosetItemWImages } from '../../../interfaces/IClosetItemWImages';
 import itemValidationSchema from '../../../validationSchemas/itemValidationSchema';
 import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIcons';  
 import PublicitySelector from '../../itemFormComponents/PublicitySelector';
@@ -12,10 +11,10 @@ import PhotoSelector from '../../itemFormComponents/PhotoSelector';
 import QualitySelector from '../../itemFormComponents/QualitySelector';
 import ClothingTypeSelector from '../../itemFormComponents/ClothingTypeSelector';
 import { Formik } from 'formik';
-import {IClothingType} from '../../../interfaces/IClothingType';
+import { IClosetItem, IClothingType } from '../../../interfaces';
 
 type ItemProps = {
-    closetItemWImages: IClosetItemWImages,
+    closetItem: IClosetItem,
     modalVisible: boolean,
     closeModal: Function
 }
@@ -53,17 +52,16 @@ class Item extends Component<ItemProps> {
 
     initClothingType = {
         image: require('../../../assets/select.png'),
-        name: this.props.closetItemWImages.closetItem.clothingType
+        name: this.props.closetItem.clothingType
     }
 
-    initialValues = { 
-        images: this.props.closetItemWImages.images, 
-        publicity: this.props.closetItemWImages.closetItem.publicity, 
-        gender: this.props.closetItemWImages.closetItem.gender, 
-        brand: this.props.closetItemWImages.closetItem.brand, 
-        size: this.props.closetItemWImages.closetItem.size, 
-        value: this.props.closetItemWImages.closetItem.value, 
-        quality: this.props.closetItemWImages.closetItem.quality, 
+    initialValues = {
+        images: this.props.closetItem.images, 
+        gender: this.props.closetItem.gender, 
+        brand: this.props.closetItem.brand, 
+        size: this.props.closetItem.size, 
+        value: this.props.closetItem.value, 
+        quality: this.props.closetItem.quality, 
         clothingType: this.initClothingType
     }
 
@@ -89,7 +87,7 @@ class Item extends Component<ItemProps> {
                     >
                     {({values, handleSubmit, handleChange, setFieldValue}) => 
                         <ScrollView>
-                            <PublicitySelector publicity={values.publicity} setPublicity={handleChange("publicity")} />
+                            {/* <PublicitySelector publicity={values.publicity} setPublicity={handleChange("publicity")} /> */}
                             <ClothingTypeSelector clothingType={values.clothingType} submitType={(clothingType: IClothingType) => setFieldValue("clothingType", clothingType, true)} />
                             <GenderSelector gender={values.gender} setGender={handleChange("gender")} />
                             <QualitySelector quality={values.quality} setQuality={(quality: number) => setFieldValue("quality", quality, true)}/>

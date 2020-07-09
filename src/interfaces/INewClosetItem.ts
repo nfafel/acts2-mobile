@@ -8,6 +8,5 @@ export interface INewClosetItem {
     size: string;
     quality: number;
     value: string;
-    publicity: string;
     clothingType: string;
 }

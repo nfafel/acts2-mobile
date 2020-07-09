@@ -4,30 +4,30 @@ import { View, TouchableOpacity, Alert } from 'react-native';
 import { Formik } from 'formik';
 import { TextInput, Text, Button } from 'react-native-paper';
 
-import { storeJWT } from '../../redux/actions';
+import { storeUser } from '../../redux/actions';
 import { connect } from 'react-redux';
 import createAccountValidationSchema from '../../validationSchemas/createAccountValidationSchema';
 import checkUsernameAvailability from '../../api/checkUsernameAvailability';
 import createUser from '../../api/createUser';
 import UniversitySelector from '../universitySelector/UniversitySelector';
-import { IUser } from '../../interfaces/IUser';
+import { IUser, INewUser, IUserWToken } from '../../interfaces';
 
 type CreateAccountProps = {
-    loginUser: Function,
+    loginUserRedux: Function,
     navigation: any
 }
 
 class CreateAccount extends Component<CreateAccountProps> {
 
-    async attemptCreateAccount(newUser: IUser) {
+    async attemptCreateAccount(newUser: INewUser) {
         const available: boolean = await checkUsernameAvailability(newUser.username);
         if (!available) {
             Alert.alert("Username already taken");
         } else {
             try {
-                const token: string = await createUser(newUser);
-                if (token) {
-                    this.props.loginUser(token);
+                const userWithToken: IUserWToken = await createUser(newUser);
+                if (userWithToken) {
+                    this.props.loginUserRedux(userWithToken);
                     this.props.navigation.navigate("AuthenticatedStack");
                 }
             } catch(err) {
@@ -96,9 +96,10 @@ class CreateAccount extends Component<CreateAccountProps> {
 
 const mapDispatchToProps = function(dispatch: any) {
     return {
-        loginUser: (token: string) => {
-            dispatch( storeJWT({
-                token: token
+        loginUserRedux: (token: string, user: IUser) => {
+            dispatch( storeUser({
+                token: token,
+                user: user,
             }))
         }
     }
