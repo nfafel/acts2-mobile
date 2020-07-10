@@ -4,6 +4,7 @@ import { IClothingType } from '../../interfaces/IClothingType';
 import { Appbar, Title } from 'react-native-paper';
 import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIcons';  
 import {vh, vw} from '../../css/viewportUnits';
+import { ClothingType } from '../../enums';
 
 type ClothingTypeSelectorProps = {
     submitType: Function,
@@ -24,27 +25,27 @@ class ClothingTypeSelector extends Component<ClothingTypeSelectorProps, Clothing
 
     typesSources: IClothingType[][] = [
         [
-            {image: require("../../assets/buttondown.png"), name: "Button Downs"}, 
-            {image: require("../../assets/croptop.png"), name: "Crop Tops"}, 
-            {image: require("../../assets/dress.png"), name: "Dresses"}, 
-            {image: require("../../assets/jeans.png"), name: "Pants"},  
-            {image: require("../../assets/jewelry.png"), name: "Jewelry"},  
-            {image: require("../../assets/leggings.png"), name: "Leggings"}
+            {image: require("../../assets/tshirt.png"), name: ClothingType.TSHIRT},
+            {image: require("../../assets/buttondown.png"), name: ClothingType.BUTTON_DOWN}, 
+            {image: require("../../assets/croptop.png"), name: ClothingType.CROP_TOP},
+            {image: require("../../assets/sweatpants.png"), name: ClothingType.SWEAT_PANTS},
+            {image: require("../../assets/dress.png"), name: ClothingType.DRESS}, 
+            {image: require("../../assets/party.png"), name: ClothingType.PARTY_CLOTHES},  //Maybe don't support
         ],  
         [
-            {image: require("../../assets/longsleeve.png"), name: "Long Sleeves"},  
-            {image: require("../../assets/menformal.png"), name: "Men Formal Wear"},  
-            {image: require("../../assets/party.png"), name: "Party Clothes"},  //Maybe don't support
-            {image: require("../../assets/shoes.png"), name: "Shoes"},  
-            {image: require("../../assets/shorts.png"), name: "Shorts"},  
-            {image: require("../../assets/skirt.png"), name: "Skirts"}, 
+            {image: require("../../assets/longsleeve.png"), name: ClothingType.LONG_SLEEVE},
+            {image: require("../../assets/sweater.png"), name: ClothingType.SWEATER},
+            {image: require("../../assets/shorts.png"), name: ClothingType.SHORTS},
+            {image: require("../../assets/leggings.png"), name: ClothingType.LEGGINGS},
+            {image: require("../../assets/menformal.png"), name: ClothingType.MEN_FORMAL_WEAR},
+            {image: require("../../assets/jewelry.png"), name: ClothingType.JEWELRY},
         ],
-        [ 
-            {image: require("../../assets/sweater.png"), name: "Sweaters"},  
-            {image: require("../../assets/sweatpants.png"), name: "Sweat Pants"},  
-            {image: require("../../assets/sweatshirt.png"), name: "Sweatshirts"}, 
-            {image: require("../../assets/tanktop.png"), name: "Tank Tops"},  
-            {image: require("../../assets/tshirt.png"), name: "TShirts"}
+        [
+            {image: require("../../assets/sweatshirt.png"), name: ClothingType.SWEATSHIRT},
+            {image: require("../../assets/tanktop.png"), name: ClothingType.TANK_TOP},
+            {image: require("../../assets/jeans.png"), name: ClothingType.PANTS},
+            {image: require("../../assets/skirt.png"), name: ClothingType.SKIRT},
+            {image: require("../../assets/shoes.png"), name: ClothingType.SHOES},
         ]
     ]
 
@@ -62,10 +63,8 @@ class ClothingTypeSelector extends Component<ClothingTypeSelectorProps, Clothing
                 </TouchableOpacity>
                 <Modal visible={this.state.modalVisible} animationType="slide">
                     <Appbar.Header >
-                        <TouchableOpacity onPress={() => this.setState({modalVisible: false})}>
-                            <MaterialCommunityIcon name="arrow-left" size={28*vh} color="blue" />
-                        </TouchableOpacity>
-                        <Title style={{alignSelf: "center"}}>Select Clothing Type</Title>
+                        <Appbar.BackAction onPress={() => this.setState({modalVisible: false})} />
+                        <Appbar.Content title='Select Clothing Type' />
                     </Appbar.Header >
 
                     <SafeAreaView style={{flexDirection: "row", flex: 1, marginTop: 10*vh}}>

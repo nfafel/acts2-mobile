@@ -41,7 +41,7 @@ class ClosetHeader extends Component<IClosetHeaderProps, IClosetHeaderState> {
 
     render() {
         const headingTitle = this.props.user ? this.props.user.username : 'Loading...';
-        const headingSubtitle = this.props.user ? this.props.user.universityId : 'Loading...';
+        const headingSubtitle = this.props.user ? this.props.user.universityName : 'Loading...';
 
         return (
             <Appbar.Header>

@@ -1,8 +1,8 @@
 import React, {useState} from 'react';
 import { View, Text, StyleSheet, SafeAreaView, TouchableOpacity, KeyboardAvoidingView, TextInput, ScrollView, Image, Alert} from 'react-native';
-import { Title, Appbar } from 'react-native-paper';
+import { Appbar } from 'react-native-paper';
 import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIcons';  
-import PublicitySelector from '../../itemFormComponents/PublicitySelector';
+// import PublicitySelector from '../../itemFormComponents/PublicitySelector';
 import GenderSelector from '../../itemFormComponents/GenderSelector';
 import PhotoSelector from '../../itemFormComponents/PhotoSelector';
 import QualitySelector from '../../itemFormComponents/QualitySelector';
@@ -47,41 +47,45 @@ const AddNewItem: React.FC<AddNewItemProps> = ({ navigation, token, addItem }) =
             Alert.alert("An error occured in adding the item. Please check internet connections and retry")
         }
     }
+    const handleCancelClicked = () => {
+        navigation.navigate("DashboardBottomTabNav")
+    }
 
-    const initClothingType: IClothingType = {
+    const initialClothingType: IClothingType = {
         image: require('../../../assets/select.png'),
         name: "Select"
     }
-    // upload() {
-    //     uploadImage(this.state.items[0].node.image);
-    // }
 
-    // async get() {
-    //     const result = await getImage("1582490074004");
-    //     this.setState({image: result.image});
-    // }
+    const initialItemData = {
+        images: [],
+        gender: "female",
+        brand: "",
+        size: "",
+        value: "",
+        quality: 0,
+        clothingType: initialClothingType
+    }
 
     return (
         <View style={{backgroundColor: "white", flex: 1}}>
+
             <Appbar.Header>
-                
-                <Title style={styles.title}>Add to Closet</Title>
-            
-                <TouchableOpacity onPress={() => navigation.navigate("DashboardBottomTabNav")}>
-                    <Text style={{color: "#f5737f", fontSize: 16*vh, fontFamily: "marker felt"}}>Cancel</Text>
+                <Appbar.Content title="Add to Closet" />
+
+                <TouchableOpacity onPress={handleCancelClicked}>
+                    <Text style={{color: "#f5737f", fontSize: 16*vh, fontWeight: 'bold', fontFamily: "marker felt", marginRight: 10*vw}}>Cancel</Text>
                 </TouchableOpacity>
-                
             </Appbar.Header>
 
             <SafeAreaView/>
                 <Formik
-                    initialValues = {{ images: [], publicity: "market", gender: "female", brand: "", size: "", value: "", quality: 0, clothingType: initClothingType}}
+                    initialValues = {initialItemData}
                     validationSchema={itemValidationSchema}
                     onSubmit = {(values) => handleSubmit(values)}
                 >
                     {({values, handleSubmit, handleChange, setFieldValue}) => 
                         <ScrollView>
-                            <PublicitySelector publicity={values.publicity} setPublicity={handleChange("publicity")} />
+                            {/* <PublicitySelector publicity={values.publicity} setPublicity={handleChange("publicity")} /> */}
                             <ClothingTypeSelector clothingType={values.clothingType} submitType={(clothingType: IClothingType) => setFieldValue("clothingType", clothingType, true)} />
                             <GenderSelector gender={values.gender} setGender={handleChange("gender")} />
                             <QualitySelector quality={values.quality} setQuality={(quality: number) => setFieldValue("quality", quality, true)}/>
