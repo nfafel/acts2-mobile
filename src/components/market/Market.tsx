@@ -2,42 +2,43 @@ import React from 'react';
 import {Component} from 'react';
 import { View, Text, SafeAreaView, TextInput, ScrollView, TouchableOpacity, Alert } from 'react-native';
 import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIcons';  
-import { IClosetItemWImages } from '../../interfaces/IClosetItemWImages';
 import Item from '../Item';
 import { ActivityIndicator } from 'react-native-paper';
 import { connect } from 'react-redux';
 import {vh, vw} from '../../css/viewportUnits';
-import getClosetItemsByUniversity from '../../api/getClosetItemsByUniversity';
-const jwtDecode = require('jwt-decode');
+import { getItemsByUniversity } from '../../api';
+import { IItem, IReduxState, IUser } from '../../interfaces';
 
-type MarketProps = {
-    token: string
+interface MarketProps {
+    token: string;
+    user: IUser | null;
 }
 
-type MarketState = {
-    closetItemsWImages: IClosetItemWImages[] | null
+interface MarketState {
+    items: IItem[] | null;
 }
 
 class Market extends Component<MarketProps, MarketState> {
     constructor(props: MarketProps) {
         super(props);
         this.state = {
-            closetItemsWImages: null
+            items: null
         }
     }
 
     async componentDidMount() {
+        if (!this.props.user) return;
+        
         try {
-            const decoded = jwtDecode(this.props.token);
-            const marketClosetItems: IClosetItemWImages[] = await getClosetItemsByUniversity(decoded.payload.universityId);
-            this.setState({closetItemsWImages: marketClosetItems})
+            const marketItems: IItem[] = await getItemsByUniversity(this.props.user.universityId);
+            this.setState({items: marketItems})
         } catch(err) {
             console.log(err);
         }
     }
 
     getMarketItems() {
-        if (this.state.closetItemsWImages === null) {
+        if (this.state.items === null) {
             return (
                 <SafeAreaView>
                     <ActivityIndicator />
@@ -45,13 +46,13 @@ class Market extends Component<MarketProps, MarketState> {
             )
         }
 
-        let closetView: JSX.Element[] = [];
-        for (var i=0; i<this.state.closetItemsWImages.length; i+=2) {
-            closetView.push(
+        let marketView: JSX.Element[] = [];
+        for (var i=0; i<this.state.items.length; i+=2) {
+            marketView.push(
                 <View key={i} style={{flexDirection: "row"}}>
-                    <Item closetItemWImages={this.state.closetItemsWImages[i]} /> 
-                    {(i+1 < this.state.closetItemsWImages.length) ? 
-                        <Item closetItemWImages={this.state.closetItemsWImages[i+1]} /> 
+                    <Item item={this.state.items[i]} /> 
+                    {(i+1 < this.state.items.length) ? 
+                        <Item item={this.state.items[i+1]} /> 
                     :
                         <View style={{flex:1, margin: 5*vw}}></View>
                     }
@@ -61,7 +62,7 @@ class Market extends Component<MarketProps, MarketState> {
 
         return (
             <ScrollView>
-                {closetView}
+                {marketView}
             </ScrollView>
         )
     }
@@ -78,10 +79,10 @@ class Market extends Component<MarketProps, MarketState> {
     }
 }
 
-const mapStateToProps = function(state: any) {
+const mapStateToProps = function(state: IReduxState) {
     return {
-        closetItemsWImages: state.closetItemsWImages,
-        token: state.token
+        token: state.token,
+        user: state.user,
     }
 }
 

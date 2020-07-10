@@ -7,8 +7,7 @@ import { TextInput, Text, Button } from 'react-native-paper';
 import { storeUser } from '../../redux/actions';
 import { connect } from 'react-redux';
 import createAccountValidationSchema from '../../validationSchemas/createAccountValidationSchema';
-import checkUsernameAvailability from '../../api/checkUsernameAvailability';
-import createUser from '../../api/createUser';
+import { checkUsernameAvailability, createUser } from '../../api';
 import UniversitySelector from '../universitySelector/UniversitySelector';
 import { IUser, INewUser, IUserWToken } from '../../interfaces';
 
@@ -28,7 +27,7 @@ class CreateAccount extends Component<CreateAccountProps> {
                 const userWithToken: IUserWToken = await createUser(newUser);
                 if (userWithToken) {
                     this.props.loginUserRedux(userWithToken);
-                    this.props.navigation.navigate("AuthenticatedStack");
+                    this.props.navigation.navigate("DashboardStack");
                 }
             } catch(err) {
                 Alert.alert("Error creating account, please try again");

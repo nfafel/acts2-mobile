@@ -1,4 +1,4 @@
-export interface INewClosetItem {
+export interface INewItem {
     userId: string;
     images: any[];
     username: string;

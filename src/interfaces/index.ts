@@ -1,8 +1,8 @@
-export { IClosetItem } from './IClosetItem';
+export { IItem } from './IItem';
 export { IClothingType } from './IClothingType';
 export { IImage } from './IImage';
 export { ILoginInfo } from './ILoginInfo';
-export { INewClosetItem } from './INewClosetItem';
+export { INewItem } from './INewItem';
 export { IReduxState } from './IReduxState';
 export { IUniversity } from './IUniversity';
 export { IUser } from './IUser';

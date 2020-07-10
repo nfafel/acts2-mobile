@@ -4,10 +4,10 @@ import { View, Text, TouchableOpacity, Image } from 'react-native';
 import { Card, Title, Paragraph } from 'react-native-paper';
 import EditItemModal from './closet/editItem/EditItemModal';
 import {vh, vw} from '../css/viewportUnits';
-import { IClosetItem } from '../interfaces';
+import { IItem } from '../interfaces';
 
 interface IItemProps {
-    closetItem: IClosetItem,
+    item: IItem,
 }
 
 interface IItemState {
@@ -37,15 +37,15 @@ class Item extends Component<IItemProps, IItemState> {
             <View style={{marginHorizontal: 5*vw, flex: 1}}>
                 <TouchableOpacity onPress={() => this.setState({modalVisible: true})}>
                     <Card>
-                        <Card.Cover source={{uri: this.props.closetItem.images[0].url}} />
+                        <Card.Cover source={{uri: this.props.item.images[0].url}} />
                         <Card.Content>
                             <Title>
-                                <Text>{this.props.closetItem.value}</Text>
+                                <Text>{this.props.item.value}</Text>
                             </Title>
                         </Card.Content>
                     </Card>
                 </TouchableOpacity>
-                <EditItemModal modalVisible={this.state.modalVisible} closeModal={() => this.setState({modalVisible: false})} closetItem={this.props.closetItem} />
+                <EditItemModal modalVisible={this.state.modalVisible} closeModal={() => this.setState({modalVisible: false})} item={this.props.item} />
             </View>
         )
     }

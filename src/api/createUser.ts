@@ -1,7 +1,7 @@
 import { INewUser } from '../interfaces';
 import {Platform} from 'react-native';
 
-const createUser = async(newUser: INewUser) => {
+export const createUser = async(newUser: INewUser) => {
     // const host = "128.4.50.240";  //This is used for debugging on actual device
     const host: string = Platform.OS === "ios" ? "localhost" : "10.0.2.2";
     const URL: string = process.env.URL || `http://${host}:8000`;
@@ -32,5 +32,3 @@ const createUser = async(newUser: INewUser) => {
         console.log(err);
     }
 }
-
-export default createUser;

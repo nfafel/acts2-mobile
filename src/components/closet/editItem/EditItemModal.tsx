@@ -11,10 +11,10 @@ import PhotoSelector from '../../itemFormComponents/PhotoSelector';
 import QualitySelector from '../../itemFormComponents/QualitySelector';
 import ClothingTypeSelector from '../../itemFormComponents/ClothingTypeSelector';
 import { Formik } from 'formik';
-import { IClosetItem, IClothingType } from '../../../interfaces';
+import { IItem, IClothingType } from '../../../interfaces';
 
 type ItemProps = {
-    closetItem: IClosetItem,
+    item: IItem,
     modalVisible: boolean,
     closeModal: Function
 }
@@ -25,7 +25,7 @@ class Item extends Component<ItemProps> {
         try {
             this.props.closeModal();
             // const decoded = jwtDecode(token);
-            // const newClosetItemData: INewClosetItem = {
+            // const newItemData: INewItem = {
             //     username: decoded.payload.username,
             //     universityId: decoded.payload.universityId,
             //     images: values.images,
@@ -37,12 +37,8 @@ class Item extends Component<ItemProps> {
             //     value: values.value,
             //     clothingType: values.clothingType.name
             // };
-            // const newClosetItem: IClosetItem = await uploadClosetItem(newClosetItemData);
-            // const newClosetItemWImages: IClosetItemWImages = {
-            //     closetItem: newClosetItem,
-            //     images: values.images.map((image: any) => image.base64)
-            // }
-            // addItem(newClosetItemWImages);
+            // const newItem: IItem = await uploadItem(newItemData);
+            
             // navigation.navigate("MainTabNav");
         } catch(err) {
             console.log(err);
@@ -52,16 +48,16 @@ class Item extends Component<ItemProps> {
 
     initClothingType = {
         image: require('../../../assets/select.png'),
-        name: this.props.closetItem.clothingType
+        name: this.props.item.clothingType
     }
 
     initialValues = {
-        images: this.props.closetItem.images, 
-        gender: this.props.closetItem.gender, 
-        brand: this.props.closetItem.brand, 
-        size: this.props.closetItem.size, 
-        value: this.props.closetItem.value, 
-        quality: this.props.closetItem.quality, 
+        images: this.props.item.images, 
+        gender: this.props.item.gender, 
+        brand: this.props.item.brand, 
+        size: this.props.item.size, 
+        value: this.props.item.value, 
+        quality: this.props.item.quality, 
         clothingType: this.initClothingType
     }
 

@@ -1,9 +1,9 @@
 import React, {Component} from 'react';
 import { Modal, View, Text, ScrollView, TouchableOpacity, SafeAreaView, TextInput } from 'react-native';
+import { Appbar, Searchbar, List, ActivityIndicator } from 'react-native-paper';
 
 import { IUniversity } from '../../interfaces/IUniversity';
-import getUniversities from '../../api/getUniversities';
-import { Appbar, Searchbar, List, ActivityIndicator } from 'react-native-paper';
+import { getUniversities } from '../../api';
 
 type UniversitySelectorProps = {
     visible: boolean,

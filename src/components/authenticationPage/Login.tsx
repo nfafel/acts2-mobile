@@ -7,10 +7,9 @@ import {vh, vw} from '../../css/viewportUnits';
 import { storeUser } from '../../redux/actions';
 import { connect } from 'react-redux';
 import loginValidationSchema from '../../validationSchemas/loginValidationSchema';
-import loginUser from '../../api/loginUser';
+import { loginUser, getUser } from '../../api';
 import { ILoginInfo } from '../../interfaces/ILoginInfo';
 import { IUser } from '../../interfaces';
-import getUser from '../../api/getUser';
 
 const jwtDecode = require('jwt-decode');
 
@@ -29,7 +28,7 @@ class Login extends Component<LoginProps> {
             const user = await getUser(decoded.payload.userId);
             if (token && user) {
                 this.props.loginUserRedux(token, user);
-                this.props.navigation.navigate("AuthenticatedStack");
+                this.props.navigation.navigate("DashboardStack");
             }
         } catch(err) {
             if (err.statusCode === 403) {

@@ -2,19 +2,37 @@ import React from 'react';
 import {Component} from 'react';
 import { View, Text, Alert, StyleSheet } from 'react-native';
 import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIcons';  
-import { Menu, MenuOptions, MenuOption, MenuTrigger } from 'react-native-popup-menu';
 import { logoutUser } from '../../redux/actions';
 import { connect } from 'react-redux';
 import { IUser, IReduxState } from '../../interfaces';
 import {vh, vw} from '../../css/viewportUnits';
+import { Appbar, Menu, Divider } from 'react-native-paper';
 
-type ClosetHeaderProps = {
-    logoutUser: Function,
-    user: IUser | null,
-    navigateToLogin: Function,
+interface IClosetHeaderProps {
+    logoutUser: Function;
+    user: IUser | null;
+    navigateToLogin: Function;
 }
 
-class ClosetHeader extends Component<ClosetHeaderProps> {
+interface IClosetHeaderState {
+    isMenuOpen: boolean;
+}
+
+class ClosetHeader extends Component<IClosetHeaderProps, IClosetHeaderState> {
+    constructor(props: IClosetHeaderProps) {
+        super(props);
+        this.state = {
+            isMenuOpen: false,
+        }
+    }
+
+    handleOpenMenu() {
+        this.setState({isMenuOpen: true});
+    }
+
+    handleCloseMenu() {
+        this.setState({isMenuOpen: false});
+    }
 
     handleLogout() {
         this.props.logoutUser();
@@ -22,20 +40,22 @@ class ClosetHeader extends Component<ClosetHeaderProps> {
     }
 
     render() {
+        const headingTitle = this.props.user ? this.props.user.username : 'Loading...';
+        const headingSubtitle = this.props.user ? this.props.user.universityId : 'Loading...';
+
         return (
-            <View style={styles.mainView}>
-                <Text>{this.props.user ? this.props.user.username : "loading..."}</Text>
-                <Text>{this.props.user ? this.props.user.universityId : "loading..."}</Text>
-                <Menu style={{position: "absolute", right: 0, top: 5}}>
-                    <MenuTrigger>
-                        <MaterialCommunityIcon name="dots-vertical" size={35} />
-                    </MenuTrigger>
-                    <MenuOptions >
-                        <MenuOption onSelect={() => Alert.alert("update")} text='Edit Profile' />
-                        <MenuOption onSelect={() => this.handleLogout()} ><Text style={{color: "red"}}>Sign Out</Text></MenuOption>
-                    </MenuOptions>
+            <Appbar.Header>
+                <Appbar.Content title={headingTitle} subtitle={headingSubtitle} />
+                <Menu
+                    visible={this.state.isMenuOpen}
+                    onDismiss={this.handleCloseMenu.bind(this)}
+                    anchor={<Appbar.Action icon="dots-vertical" onPress={this.handleOpenMenu.bind(this)} />}
+                >
+                    <Menu.Item onPress={() => Alert.alert("update")} title='Edit Profile' />
+                    <Divider />
+                    <Menu.Item onPress={this.handleLogout.bind(this)} title='Logout' />
                 </Menu>
-            </View>
+            </Appbar.Header>
         )
     }
 }

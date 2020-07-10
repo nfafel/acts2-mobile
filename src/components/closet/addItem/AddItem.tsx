@@ -11,12 +11,10 @@ import { Formik } from 'formik';
 import {vw, vh} from '../../../css/viewportUnits';
 import itemValidationSchema from '../../../validationSchemas/itemValidationSchema';
 import { IClothingType } from '../../../interfaces/IClothingType';
-import uploadClosetItem from '../../../api/uploadClosetItem';
-import { IClosetItem } from '../../../interfaces/IClosetItem';
-import { addClosetItem } from '../../../redux/actions';
+import { uploadItem } from '../../../api';
+import { IItem } from '../../../interfaces';
 import { connect } from 'react-redux';
-import { IClosetItemWImages } from '../../../interfaces/IClosetItemWImages';
-import { INewClosetItem } from '../../../interfaces/INewClosetItem';
+import { INewItem } from '../../../interfaces';
 const jwtDecode = require('jwt-decode');
 
 type AddNewItemProps = {
@@ -29,12 +27,11 @@ const AddNewItem: React.FC<AddNewItemProps> = ({ navigation, token, addItem }) =
     const handleSubmit = async(values: any) => {
         try {
             const decoded = jwtDecode(token);
-            const newClosetItemData: INewClosetItem = {
+            const newItemData: INewItem = {
                 userId: decoded.payload.userId,
                 username: decoded.payload.username,
                 universityId: decoded.payload.universityId,
                 images: values.images,
-                publicity: values.publicity,
                 gender: values.gender,
                 quality: values.quality,
                 brand: values.brand,
@@ -42,13 +39,9 @@ const AddNewItem: React.FC<AddNewItemProps> = ({ navigation, token, addItem }) =
                 value: values.value,
                 clothingType: values.clothingType.name
             };
-            const newClosetItem: IClosetItem = await uploadClosetItem(newClosetItemData);
-            const newClosetItemWImages: IClosetItemWImages = {
-                closetItem: newClosetItem,
-                images: values.images.map((image: any) => image.base64)
-            }
-            addItem(newClosetItemWImages);
-            navigation.navigate("MainTabNav");
+            const newItem: IItem = await uploadItem(newItemData);
+            addItem
+            navigation.navigate("DashboardBottomTabNav");
         } catch(err) {
             console.log(err);
             Alert.alert("An error occured in adding the item. Please check internet connections and retry")
@@ -60,7 +53,7 @@ const AddNewItem: React.FC<AddNewItemProps> = ({ navigation, token, addItem }) =
         name: "Select"
     }
     // upload() {
-    //     uploadImage(this.state.closetItems[0].node.image);
+    //     uploadImage(this.state.items[0].node.image);
     // }
 
     // async get() {
@@ -74,7 +67,7 @@ const AddNewItem: React.FC<AddNewItemProps> = ({ navigation, token, addItem }) =
                 
                 <Title style={styles.title}>Add to Closet</Title>
             
-                <TouchableOpacity onPress={() => navigation.navigate("Closet")}>
+                <TouchableOpacity onPress={() => navigation.navigate("DashboardBottomTabNav")}>
                     <Text style={{color: "#f5737f", fontSize: 16*vh, fontFamily: "marker felt"}}>Cancel</Text>
                 </TouchableOpacity>
                 
@@ -152,23 +145,13 @@ const AddNewItem: React.FC<AddNewItemProps> = ({ navigation, token, addItem }) =
     )
 }
 
-const mapDispatchToProps = function(dispatch: any) {
-    return {
-        addItem: (closetItem: IClosetItemWImages) => {
-            dispatch( addClosetItem({
-                newItem: closetItem, 
-            }))
-        },
-    }
-}
-
 const mapStateToProps = function(state: any) {
     return {
         token: state.token,
     }
 }
   
-export default connect(mapStateToProps, mapDispatchToProps)(AddNewItem);
+export default connect(mapStateToProps)(AddNewItem);
 
 const styles = StyleSheet.create({
     title: {

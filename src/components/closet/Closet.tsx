@@ -7,23 +7,23 @@ import ClosetHeader from './ClosetHeader';
 import Item from '../Item';
 import FontAwesome5Icon from 'react-native-vector-icons/FontAwesome5';  
 import {vw, vh} from '../../css/viewportUnits';
-import getClosetItemsByUser from '../../api/getClosetItemsByUser';
-import { IClosetItem, IUser, IReduxState } from '../../interfaces';
+import { getItemsByUser } from '../../api';
+import { IItem, IUser, IReduxState } from '../../interfaces';
 
 interface IClosetProps {
-    navigation: any;
+    navigation: any,
     user: IUser | null;
 }
 
 interface IClosetState {
-    closetItems: IClosetItem[] | undefined;
+    items: IItem[] | undefined;
 }
 
 class Closet extends Component<IClosetProps, IClosetState> {
     constructor(props: IClosetProps) {
         super(props);
         this.state = {
-            closetItems: undefined,
+            items: undefined,
         }
     }
 
@@ -34,8 +34,8 @@ class Closet extends Component<IClosetProps, IClosetState> {
         }
 
         try {
-            const closetItems: IClosetItem[] = await getClosetItemsByUser(this.props.user.id);
-            this.setState({closetItems: closetItems});
+            const items: IItem[] = await getItemsByUser(this.props.user.id);
+            this.setState({items: items});
         } catch(err) {
             console.log(err);
             Alert.alert("An error occured. Please log out and log back in")
@@ -44,13 +44,13 @@ class Closet extends Component<IClosetProps, IClosetState> {
 
     getClosetItems() {
         const closetView = [];
-        if (this.state.closetItems) {
-            for (var i=0; i<this.state.closetItems.length; i+=2) {
+        if (this.state.items) {
+            for (var i=0; i<this.state.items.length; i+=2) {
                 closetView.push(
                     <View key={i} style={{flexDirection: "row"}}>
-                        <Item closetItem={this.state.closetItems[i]} /> 
-                        {(i+1 < this.state.closetItems.length) ? 
-                            <Item closetItem={this.state.closetItems[i+1]} /> 
+                        <Item item={this.state.items[i]} /> 
+                        {(i+1 < this.state.items.length) ? 
+                            <Item item={this.state.items[i+1]} /> 
                         :
                             <View style={{flex:1, margin: 5*vw}}></View>
                         }
@@ -68,18 +68,20 @@ class Closet extends Component<IClosetProps, IClosetState> {
 
     render() {        
         let closetBody;
-        if (!this.state.closetItems) {
+        if (!this.state.items) {
             closetBody = (
                 <ActivityIndicator />
             );
-        } else if (this.state.closetItems.length === 0) {
+        } else if (this.state.items.length === 0) {
             closetBody = (
                 <View style={{margin: 20}}>
                     <Text style={{fontSize: 30, fontFamily: "marker felt"}}>
                         Your closet is empty!
                     </Text>
                     <View style={{flexDirection: "row", margin: 15}}>
-                        <TouchableOpacity onPress={() => this.props.navigation.navigate("AddItem")} >
+                        <TouchableOpacity 
+                            onPress={() => this.props.navigation.navigate("AddItem")}
+                        >
                             <FontAwesome5Icon 
                                 name="plus-square"
                                 color="black"
@@ -113,7 +115,9 @@ class Closet extends Component<IClosetProps, IClosetState> {
 
         return (
             <SafeAreaView style={{backgroundColor: "white", flex: 1}}>
-                <ClosetHeader navigateToLogin={() => this.props.navigation.navigate("Login")} />
+                <ClosetHeader
+                    navigateToLogin={() => this.props.navigation.navigate("Login")}
+                />
                 {closetBody}
             </SafeAreaView>
         )
