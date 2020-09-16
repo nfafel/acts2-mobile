@@ -1,18 +1,34 @@
-import React, {Component, useState} from 'react';
-import { View, Text, TouchableOpacity, Image, StyleSheet, ScrollView } from 'react-native';
+import React from 'react';
+import { View, Text, TouchableOpacity, Image, ScrollView } from 'react-native';
 import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIcons';  
-import { IImage } from '../../interfaces/IImage';
-import {vw, vh} from '../../css/viewportUnits';
+import { vh } from '../../css/viewportUnits';
 import { FieldArray } from 'formik';
-import CameraModal from './CameraModal';
+import ImagePicker, { ImagePickerResponse } from 'react-native-image-picker';
 
 type PhotoSelectorProps = {
-    images: any,
+    images: ImagePickerResponse[],
     setFieldValue: Function
 }
 
 const PhotoSelector: React.FC<PhotoSelectorProps> = (props) => {
-    const [cameraOpen, setCameraOpen] = useState<boolean>(false);
+    const chooseFile = () => {
+        var options = {
+            title: 'Select Image',
+            storageOptions: {
+                skipBackup: true,
+                path: 'images',
+            },
+            mediaTypes: 'Images',
+        };
+        ImagePicker.showImagePicker(options, response => {        
+            if (response.error) {
+                console.log('ImagePicker Error: ', response.error);
+            } else if (response.data) {
+                props.images.push(response);
+                props.setFieldValue('images', props.images);
+            }
+        });
+    };
 
     return (
         <View style={{margin: 20}}>
@@ -23,7 +39,7 @@ const PhotoSelector: React.FC<PhotoSelectorProps> = (props) => {
                     render={arrayHelpers => (
                         <View style={{maxWidth: "70%"}}>
                             <ScrollView horizontal>
-                                {props.images.map((image: IImage, index: any) => (
+                                {props.images.map((image: ImagePickerResponse, index: any) => (
                                     <TouchableOpacity 
                                         onPress={() => {
                                             arrayHelpers.remove(index)
@@ -31,7 +47,7 @@ const PhotoSelector: React.FC<PhotoSelectorProps> = (props) => {
                                         key={index} 
                                         style={{marginRight: 10}}
                                     >
-                                        <Image source={{uri: `data:image/png;base64,${image.base64}`}} style={{width: 75*vh, height: 75*vh}} /> 
+                                        <Image source={{uri: `data:image/png;base64,${image.data}`}} style={{width: 75*vh, height: 75*vh}} /> 
                                     </TouchableOpacity>
                                 ))}
                             </ScrollView>
@@ -39,17 +55,10 @@ const PhotoSelector: React.FC<PhotoSelectorProps> = (props) => {
                     )}
                 />
                 <TouchableOpacity
-                    onPress={() => setCameraOpen(true)}
+                    onPress={chooseFile}
                     style={{borderWidth: 1, borderRadius: 15, marginLeft: 10 }}
                 >
                     <MaterialCommunityIcon name="camera" size={60*vh} color="#96beeb" style={{height: 59*vh}} />
-                    <CameraModal
-                        open={cameraOpen}
-                        closeCamera={() => setCameraOpen(false)}
-                        submitPicture={(newImage: IImage) => {
-                            props.setFieldValue("images", [...props.images, newImage], true)
-                        }}
-                    />
                 </TouchableOpacity>
             </View>
         </View>

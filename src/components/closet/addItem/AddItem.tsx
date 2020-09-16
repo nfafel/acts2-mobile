@@ -20,17 +20,17 @@ const jwtDecode = require('jwt-decode');
 type AddNewItemProps = {
     navigation: any,
     token: string,
-    addItem: Function
 }
 
-const AddNewItem: React.FC<AddNewItemProps> = ({ navigation, token, addItem }) => {
+const AddNewItem: React.FC<AddNewItemProps> = ({ navigation, token }) => {
     const handleSubmit = async(values: any) => {
         try {
             const decoded = jwtDecode(token);
+            console.log(decoded.payload);
             const newItemData: INewItem = {
                 userId: decoded.payload.userId,
-                username: decoded.payload.username,
-                universityId: decoded.payload.universityId,
+                username: 'decoded.payload.username',
+                universityId: 'decoded.payload.universityId',
                 images: values.images,
                 gender: values.gender,
                 quality: values.quality,
@@ -39,8 +39,9 @@ const AddNewItem: React.FC<AddNewItemProps> = ({ navigation, token, addItem }) =
                 value: values.value,
                 clothingType: values.clothingType.name
             };
+            console.log('newItemData: ', newItemData);
             const newItem: IItem = await uploadItem(newItemData);
-            addItem
+            console.log('returned item: ', newItem);
             navigation.navigate("DashboardBottomTabNav");
         } catch(err) {
             console.log(err);
@@ -154,7 +155,7 @@ const mapStateToProps = function(state: any) {
         token: state.token,
     }
 }
-  
+
 export default connect(mapStateToProps)(AddNewItem);
 
 const styles = StyleSheet.create({

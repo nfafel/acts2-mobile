@@ -6,3 +6,5 @@ export { getUniversities } from './getUniversities';
 export { getUser } from './getUser';
 export { loginUser } from './loginUser';
 export { uploadItem } from './uploadItem';
+export { getMessagesByChat } from './getMessagesByChat';
+export { getChatsByUser } from './getChatsByUser';

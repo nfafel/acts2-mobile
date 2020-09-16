@@ -29,6 +29,7 @@ export const uploadItem = async(newItemData: INewItem) => {
         body: formData
     });
     const newItem = await newItemResponse.json();
+    console.log(newItem);
 
     if (newItemResponse.status !== 200) {
         var error: any = new Error(newItem.message);

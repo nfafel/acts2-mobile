@@ -54,7 +54,7 @@ class Login extends Component<LoginProps> {
                 >
                     {({values, errors, submitForm, handleChange, touched}) => 
                         <View >
-                            <Text style={{fontSize: 40, margin: 7, textAlign: "center", fontWeight: "bold"}}>Act 2</Text>
+                            <Text style={{fontSize: 40, margin: 7, textAlign: "center", fontWeight: "bold"}}>Acts 2</Text>
                             <Text style={{fontSize: 25, margin: 7, textAlign: "center"}}>Welcome back!</Text>
                             <View style={{margin: 20*vw}}>
                                 <TextInput

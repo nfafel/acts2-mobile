@@ -4,8 +4,7 @@ import {IClothingType} from '../interfaces/IClothingType';
 export default Yup.object().shape({
     images: Yup.array()
         .required('Required'),
-    publicity: Yup.string()
-        .required('Required'),
+    publicity: Yup.string(),
     gender: Yup.string()
         .required('Required'),
     brand: Yup.string()

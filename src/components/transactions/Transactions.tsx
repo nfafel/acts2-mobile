@@ -1,20 +1,26 @@
 import React from 'react';
-import { View, Text, TextInput, KeyboardAvoidingView, TouchableOpacity } from 'react-native';
+import { View, Text, TextInput, KeyboardAvoidingView, TouchableOpacity, Alert, SafeAreaView } from 'react-native';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
-import Incoming from './Incoming';
-import Outgoing from './Outgoing';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import Incoming from '../transactions/Incoming';
+import Outgoing from '../transactions/Outgoing';
+import { Appbar } from 'react-native-paper';
 
 type TransactionsProps = {
-    
+    navigation: any
 }
 
 const Tab = createMaterialTopTabNavigator();
 
-const TransactionsRouter: React.FC<TransactionsProps> = () =>  {
-
+const TransactionsRouter: React.FC<TransactionsProps> = (props) =>  {
     return (
         <SafeAreaView style={{flex: 1}}>
+            <Appbar.Header>
+                <Appbar.Content title="Transactions"/>
+                <Appbar.Action
+                    icon="message-text-outline"
+                    onPress={() => props.navigation.navigate("ChatBoard")}
+                />
+            </Appbar.Header>
             <Tab.Navigator
                 initialRouteName="Incoming"
                 tabBarOptions={{

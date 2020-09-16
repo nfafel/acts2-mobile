@@ -1,7 +1,6 @@
 import React from 'react';
 import {Component} from 'react';
 import { View, Text, Alert, StyleSheet } from 'react-native';
-import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIcons';  
 import { logoutUser } from '../../redux/actions';
 import { connect } from 'react-redux';
 import { IUser, IReduxState } from '../../interfaces';

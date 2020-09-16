@@ -1,6 +1,8 @@
+import { ImagePickerResponse } from "react-native-image-picker";
+
 export interface INewItem {
     userId: string;
-    images: any[];
+    images: ImagePickerResponse[];
     username: string;
     universityId: string;
     gender: string;

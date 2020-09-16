@@ -8,7 +8,6 @@ import { NavigationContainer } from '@react-navigation/native';
 import store, { persistor } from './redux/store'
 import AuthenticationStack from './components/navigation/AuthenticationStack';
 
-
 const App: React.FC = () => {
   return (
     <ReduxProvider store={store}>
